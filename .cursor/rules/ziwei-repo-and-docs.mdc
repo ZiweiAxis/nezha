@@ -20,3 +20,10 @@ alwaysApply: true
 ## 引用与一致性
 
 - 子项目 PRD/架构/对齐文档**必须引用**根 `ziwei/docs/open/technical/紫微智能体治理基础设施-技术方案.md` 及根 planning-artifacts（若存在）；新建或修改根技术文档时放在 `docs/open/technical/`，并更新所有引用为 `ziwei/docs/open/technical/...`。
+
+## 子项目任务与 Agent 调度
+
+- **归属原则**：需在子项目内执行的任务（如 diting I-016～I-018、tianshu 对接 DID、taibai SDK 迭代），由**该子项目上下文下的 Agent 执行**，不在主仓 Agent 中代做子项目代码/配置修改。
+- **自动调度**：根/紫微侧识别到任务属于某子模块时，应**调度子 Agent 执行**——即在对应子项目目录（`ziwei/diting`、`ziwei/tianshu`、`ziwei/taibai`）下启动或切换会话，使 Agent 在该子项目的规则、ISSUE_LIST、_bmad 下执行；根侧仅保留平台级决策、里程碑与联调约定。
+- **BMAD 规范与角色**：子项目任务规划与执行须**按 BMAD 规范校验**，并在调度时**设置对应 BMAD 角色**（PM/Architect/Dev/QA/SM 等）与**工作流**（如 create-prd、create-architecture、dev-story、implementation-readiness）；详见 `docs/open/technical/子项目任务与Agent调度约定.md` §5。
+- **实现方式**：可在根会话中明确产出「待子项目执行」的任务清单、验收条件、建议 BMAD 阶段与角色，由用户或自动化在子项目目录打开会话并以对应角色/工作流交付给子 Agent；若工具支持，可配置为按子项目路径自动路由到子 Agent。
