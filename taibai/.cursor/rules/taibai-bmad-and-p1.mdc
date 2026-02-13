@@ -1,0 +1,23 @@
+---
+description: 太白采用 BMAD 开发；当前对焦 P1（协议与文档与根技术方案 §4 一致）
+alwaysApply: true
+---
+
+# 太白子项目：BMAD 与当前对焦
+
+## BMAD 开发
+
+- 太白与天枢、谛听一致，**采用 BMAD** 进行规划与实现。
+- 规划/架构/Story 产出放在 `_bmad-output/`（planning-artifacts、implementation-artifacts 等）；使用 `_bmad/` 下配置与工作流。
+- 涉及接入规范、SDK、与天枢/谛听接口的 PRD 或架构，须与根技术方案一致；引用 `ziwei/docs/open/technical/紫微智能体治理基础设施-技术方案.md` **§4（太白子系统：开放接入规范）**。
+
+## 当前对焦（根侧 P1）
+
+- **P1**：协议与文档与根技术方案 §4 一致——保持 **SDK**、**verification_agent**、**docs** 与根协议定义一致。
+- 权威协议：`ziwei/docs/open/technical/紫微智能体治理基础设施-技术方案.md` 第 4 节（事件类型、SDK 能力、预置适配器）。
+- 根对焦说明：`ziwei/_bmad-output/planning-artifacts/各子项目应对焦事项与进度同步.md` §2.3 太白。
+
+## 执行约定
+
+- 在 `ziwei/taibai` 下由**太白 sub-agent** 执行；不由主仓 Agent 代做 taibai 代码/文档修改。
+- 任务较大或范围不清时，使用 BMAD 工作流（如 create-prd、create-architecture、dev-story）后再实现；小修或明确 bug 可直接实现。
