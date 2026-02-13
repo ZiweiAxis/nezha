@@ -1,0 +1,19 @@
+# 主仓：子项目代码由各自 git 管理；仅由紫微管理子项目下的 BMAD 输出
+/tianshu/*
+!/tianshu/_bmad/
+!/tianshu/_bmad/**
+!/tianshu/_bmad-output/
+!/tianshu/_bmad-output/**
+/diting/*
+!/diting/_bmad/
+!/diting/_bmad/**
+!/diting/_bmad-output/
+!/diting/_bmad-output/**
+
+# 通用
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+*.log

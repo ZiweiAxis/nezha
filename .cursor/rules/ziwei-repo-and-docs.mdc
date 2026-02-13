@@ -1,0 +1,22 @@
+---
+description: 紫微主仓与子项目 Git、文档归属及 BMAD 产出约定（基础规则）
+alwaysApply: true
+---
+
+# 紫微主仓与文档基础约定
+
+## 仓库与 Git
+
+- **主仓（ziwei）**：仅做本地版本管理，不配置远程；所有 `docs/` 目录均纳入跟踪，主仓 `.gitignore` 不忽略文档。
+- **子项目**：天枢（tianshu）、谛听（diting）各自独立 git；太白（taibai）为主仓内子模块目录，提供 SDK 与接入验证用智能体；子仓内忽略 `_bmad/`、`_bmad-output/`。
+- **主仓跟踪子项目 BMAD**：主仓只跟踪 `tianshu/_bmad/`、`tianshu/_bmad-output/`、`diting/_bmad/`、`diting/_bmad-output/`，子项目其余代码由子仓管理；`taibai/` 由主仓直接跟踪。
+
+## 文档归属（docs/）
+
+- **根权威技术文档**：放在 `ziwei/docs/open/technical/`（如技术方案、架构图、BMAD 多子项目约定）。引用时使用路径 `ziwei/docs/open/technical/...`。
+- **分类**：`open/`（technical、product、community、governance）、`business/`、`ip/`、`internal/`；详见 `docs/README.md`。
+- **子项目敏感文档**：商业策划、BP、知识产权等从子仓迁移到紫微 `docs/business/`、`docs/ip/` 或 `docs/internal/`，子仓内可留占位「见紫微 docs/...」。
+
+## 引用与一致性
+
+- 子项目 PRD/架构/对齐文档**必须引用**根 `ziwei/docs/open/technical/紫微智能体治理基础设施-技术方案.md` 及根 planning-artifacts（若存在）；新建或修改根技术文档时放在 `docs/open/technical/`，并更新所有引用为 `ziwei/docs/open/technical/...`。
