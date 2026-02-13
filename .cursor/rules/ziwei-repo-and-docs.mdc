@@ -7,9 +7,9 @@ alwaysApply: true
 
 ## 仓库与 Git
 
-- **主仓（ziwei）**：仅做本地版本管理，不配置远程；所有 `docs/` 目录均纳入跟踪，主仓 `.gitignore` 不忽略文档。
-- **子项目**：天枢（tianshu）、谛听（diting）各自独立 git；太白（taibai）为主仓内子模块目录，提供 SDK 与接入验证用智能体；子仓内忽略 `_bmad/`、`_bmad-output/`。
-- **主仓跟踪子项目 BMAD**：主仓只跟踪 `tianshu/_bmad/`、`tianshu/_bmad-output/`、`diting/_bmad/`、`diting/_bmad-output/`，子项目其余代码由子仓管理；`taibai/` 由主仓直接跟踪。
+- **主仓（ziwei）**：推 NAS（`nas:/volume2/homes/hulk/git/ziwei.git`）；所有 `docs/` 目录均纳入跟踪，主仓 `.gitignore` 不忽略文档。
+- **子项目**：天枢（tianshu）、谛听（diting）、太白（taibai）各自独立 git，**统一在 GitHub 组织 ZiweiAxis 下**，**仓库名与模块名一致**（`ZiweiAxis/tianshu`、`ZiweiAxis/diting`、`ZiweiAxis/taibai`）；子仓内忽略 `_bmad/`、`_bmad-output/`。
+- **主仓跟踪子项目 BMAD**：主仓只跟踪 `tianshu/_bmad/`、`tianshu/_bmad-output/`、`diting/_bmad/`、`diting/_bmad-output/`，子项目其余代码由子仓管理；`taibai/` 可在主仓内保留或后续改为 submodule 指向 `ZiweiAxis/taibai`。
 
 ## 文档归属（docs/）
 
