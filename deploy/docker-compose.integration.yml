@@ -33,13 +33,8 @@ services:
       SYNAPSE_REPORT_STATS: "no"
     volumes:
       - synapse-data:/data
-    command: >
-      sh -c "
-        if [ ! -f /data/homeserver.yaml ]; then
-          python -m synapse.app.homeserver generate
-        fi;
-        exec python -m synapse.app.homeserver run
-      "
+      - ./deploy/synapse-entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["/entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8008/health')\""]
       interval: 10s
