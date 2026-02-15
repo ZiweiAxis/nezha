@@ -26,11 +26,13 @@ cp deploy/env.example .env
 # 2. 启动
 docker compose -f deploy/docker-compose.integration.yml up -d
 
-# 3. 健康检查
+# 3. 健康检查（在有 Docker 的环境执行）
 curl -s http://localhost:8080/healthz   # 谛听
 curl -s http://localhost:8082/health   # 天枢
 curl -s http://localhost:8008/health   # Synapse
 ```
+
+若在 ziwei 根目录执行，可省略 `--project-directory .`（默认以当前目录为 project 目录，`.env` 取根目录下的 `.env`）。
 
 **端口**：
 
