@@ -11,9 +11,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - CONFIG_PATH=/app/config.example.yaml
+      - CONFIG_PATH=/app/config.chain.yaml
     volumes:
       - diting-data:/app/data
+      - ./deploy/diting-config-chain.yaml:/app/config.chain.yaml:ro
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/healthz || exit 1"]
       interval: 15s
@@ -24,13 +25,14 @@ services:
       - ziwei-net
 
   synapse:
-    image: matrixdotorg/synapse:v1.100.0
+    image: ${SYNAPSE_IMAGE:-matrixdotorg/synapse:v1.100.0}
     container_name: ziwei-synapse
     ports:
       - "8008:8008"
     environment:
       SYNAPSE_SERVER_NAME: matrix.local
       SYNAPSE_REPORT_STATS: "no"
+      SYNAPSE_REGISTRATION_SHARED_SECRET: ${REGISTRATION_SHARED_SECRET:-ziwei-gateway-dev-secret}
     volumes:
       - synapse-data:/data
       - ./deploy/synapse-entrypoint.sh:/entrypoint.sh:ro
@@ -55,6 +57,8 @@ services:
       - MATRIX_HOMESERVER=http://synapse:8008
       - MATRIX_GATEWAY_USER=${MATRIX_GATEWAY_USER:-@gateway:matrix.local}
       - MATRIX_GATEWAY_TOKEN=${MATRIX_GATEWAY_TOKEN}
+      - REGISTRATION_SHARED_SECRET=${REGISTRATION_SHARED_SECRET:-ziwei-gateway-dev-secret}
+      - MATRIX_GATEWAY_TOKEN_FILE=/data/gateway_token
       - FEISHU_APP_ID=${FEISHU_APP_ID}
       - FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
       - HEALTH_PORT=8080
@@ -63,6 +67,8 @@ services:
       - DITING_APPROVE_CALLBACK_URL=${DITING_APPROVE_CALLBACK_URL:-}
     env_file:
       - .env
+    volumes:
+      - tianshu-data:/data
     depends_on:
       diting:
         condition: service_healthy
@@ -80,6 +86,7 @@ services:
 volumes:
   synapse-data:
   diting-data:
+  tianshu-data:
 
 networks:
   ziwei-net:
