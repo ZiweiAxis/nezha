@@ -1,0 +1,567 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="文档">
+  <section class="docs-hero">
+    <div class="container">
+      <h1>文档中心</h1>
+      <p>全面的技术文档，助您快速上手紫微平台</p>
+    </div>
+  </section>
+
+  <section class="docs-content">
+    <div class="container">
+      <div class="docs-grid">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+          <nav class="sidebar-nav">
+            <div class="nav-section">
+              <h3>快速开始</h3>
+              <a href="#installation">安装</a>
+              <a href="#quickstart">快速开始</a>
+              <a href="#configuration">配置</a>
+            </div>
+            <div class="nav-section">
+              <h3>核心组件</h3>
+              <a href="#tianshu">天枢 - 消息枢纽</a>
+              <a href="#diting">谛听 - 策略服务</a>
+              <a href="#wukong">悟空 - 拦截器</a>
+              <a href="#taibai">太白 - Python SDK</a>
+            </div>
+            <div class="nav-section">
+              <h3>进阶</h3>
+              <a href="#api">API 参考</a>
+              <a href="#architecture">架构设计</a>
+              <a href="#deployment">部署指南</a>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="docs-main">
+          <!-- Installation -->
+          <div class="doc-section" id="installation">
+            <h2>安装</h2>
+            <p>紫微平台支持多种安装方式，选择最适合您的方式开始使用：</p>
+            
+            <h3>通过 pip 安装 (推荐)</h3>
+            <div class="code-block">
+              <pre><code>pip install ziwei-sdk</code></pre>
+            </div>
+            
+            <h3>从源码安装</h3>
+            <div class="code-block">
+              <pre><code>git clone https://github.com/ziwei-ai/ziwei.git
+cd ziwei
+pip install -e .</code></pre>
+            </div>
+            
+            <h3>Docker 部署</h3>
+            <div class="code-block">
+              <pre><code>docker pull ziwei/ziwei-platform
+docker run -d -p 8080:8080 ziwei/ziwei-platform</code></pre>
+            </div>
+          </div>
+
+          <!-- Quickstart -->
+          <div class="doc-section" id="quickstart">
+            <h2>快速开始</h2>
+            <p>以下示例展示如何使用太白 SDK 快速集成紫微平台：</p>
+            
+            <div class="code-block">
+              <pre><code>from ziwei import ZiweiClient
+
+# 初始化客户端
+client = ZiweiClient(
+    api_key="your-api-key",
+    base_url="http://localhost:8080"
+)
+
+# 发送消息
+response = client.tianshu.send_message(
+    receiver="agent-001",
+    content="Hello, Ziwei!"
+)
+
+print(response)</code></pre>
+            </div>
+            
+            <div class="note">
+              <strong>💡 提示：</strong> 在生产环境中，请确保妥善保管您的 API Key，不要将其提交到代码仓库。
+            </div>
+          </div>
+
+          <!-- Configuration -->
+          <div class="doc-section" id="configuration">
+            <h2>配置</h2>
+            
+            <h3>环境变量</h3>
+            <div class="code-block">
+              <pre><code># .env
+ZIWEI_API_KEY=your-api-key
+ZIWEI_BASE_URL=http://localhost:8080
+ZIWEI_LOG_LEVEL=info</code></pre>
+            </div>
+            
+            <h3>配置文件</h3>
+            <div class="code-block">
+              <pre><code># ziwei.yaml
+ziwei:
+  api_key: ZIWEI_API_KEY
+  base_url: ZIWEI_BASE_URL
+  
+tianshu:
+  enabled: true
+  port: 8081
+  
+diting:
+  enabled: true
+  port: 8080
+  
+wukong:
+  enabled: true
+  rules:
+    - name: rate-limit
+      max_requests: 100
+      window: 60</code></pre>
+            </div>
+          </div>
+
+          <!-- Tian Shu -->
+          <div class="doc-section" id="tianshu">
+            <h2>天枢 - 消息枢纽</h2>
+            <p>天枢是紫微平台的核心消息枢纽，负责 Agent 之间的消息路由和分发。</p>
+            
+            <h3>主要特性</h3>
+            <ul>
+              <li>多协议支持 (HTTP, WebSocket, gRPC)</li>
+              <li>消息持久化与重试</li>
+              <li>消息过滤与转换</li>
+              <li>集群支持</li>
+            </ul>
+            
+            <h3>API 示例</h3>
+            <div class="code-block">
+              <pre><code># 发送消息
+message = client.tianshu.send_message(
+    receiver="agent-002",
+    content={"type": "text", "body": "Hello!"},
+    metadata={"priority": "high"}
+)
+
+# 订阅消息
+for msg in client.tianshu.subscribe("my-agent"):
+    print(f"Received: {msg}")</code></pre>
+            </div>
+          </div>
+
+          <!-- Di Ting -->
+          <div class="doc-section" id="diting">
+            <h2>谛听 - 策略服务</h2>
+            <p>谛听提供智能策略引擎，支持复杂业务规则的配置和管理。</p>
+            
+            <h3>主要特性</h3>
+            <ul>
+              <li>可视化策略配置</li>
+              <li>策略版本管理</li>
+              <li>实时策略生效</li>
+              <li>策略执行日志</li>
+            </ul>
+            
+            <h3>策略定义</h3>
+            <div class="code-block">
+              <pre><code># 定义策略规则
+strategy = {
+    "name": "message-filter",
+    "conditions": [
+        {
+            "field": "content.length",
+            "operator": "gt",
+            "value": 1000
+        }
+    ],
+    "actions": [
+        {
+            "type": "reject",
+            "message": "Message too long"
+        }
+    ]
+}
+
+# 注册策略
+client.diting.register_strategy(strategy)</code></pre>
+            </div>
+          </div>
+
+          <!-- Wu Kong -->
+          <div class="doc-section" id="wukong">
+            <h2>悟空 - 拦截器</h2>
+            <p>悟空是请求拦截与过滤中间件，提供安全防护和流量控制能力。</p>
+            
+            <h3>主要特性</h3>
+            <ul>
+              <li>请求拦截与过滤</li>
+              <li>流量控制与限速</li>
+              <li>内容安全审核</li>
+              <li>请求日志审计</li>
+            </ul>
+            
+            <h3>配置拦截器</h3>
+            <div class="code-block">
+              <pre><code># 配置拦截规则
+interceptor_config = {
+    "filters": [
+        {
+            "type": "rate_limit",
+            "max_requests": 100,
+            "window_seconds": 60
+        },
+        {
+            "type": "content_filter",
+            "blocked_patterns": ["spam", "malicious"]
+        }
+    ]
+}
+
+client.wukong.configure(interceptor_config)</code></pre>
+            </div>
+          </div>
+
+          <!-- Tai Bai -->
+          <div class="doc-section" id="taibai">
+            <h2>太白 - Python SDK</h2>
+            <p>太白是紫微平台的 Python 开发套件，提供简洁易用的 API。</p>
+            
+            <h3>主要特性</h3>
+            <ul>
+              <li>完整 API 封装</li>
+              <li>异步支持</li>
+              <li>类型提示</li>
+              <li>自动重试</li>
+            </ul>
+            
+            <h3>完整示例</h3>
+            <div class="code-block">
+              <pre><code>import asyncio
+from ziwei import ZiweiClient
+
+async def main():
+    client = ZiweiClient("your-api-key")
+    
+    # 异步发送消息
+    await client.tianshu.async_send(
+        "agent-001",
+        "Hello async!"
+    )
+    
+    # 异步获取状态
+    status = await client.get_status()
+    print(status)
+
+asyncio.run(main())</code></pre>
+            </div>
+          </div>
+
+          <!-- API Reference -->
+          <div class="doc-section" id="api">
+            <h2>API 参考</h2>
+            
+            <h3>ZiweiClient</h3>
+            <div class="api-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>方法</th>
+                    <th>描述</th>
+                    <th>参数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>send_message()</code></td>
+                    <td>发送消息</td>
+                    <td>receiver, content, metadata?</td>
+                  </tr>
+                  <tr>
+                    <td><code>subscribe()</code></td>
+                    <td>订阅消息</td>
+                    <td>agent_id</td>
+                  </tr>
+                  <tr>
+                    <td><code>register_strategy()</code></td>
+                    <td>注册策略</td>
+                    <td>strategy</td>
+                  </tr>
+                  <tr>
+                    <td><code>configure()</code></td>
+                    <td>配置拦截器</td>
+                    <td>config</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Architecture -->
+          <div class="doc-section" id="architecture">
+            <h2>架构设计</h2>
+            
+            <h3>整体架构</h3>
+            <p>紫微平台采用分层架构设计：</p>
+            <ul>
+              <li><strong>应用层</strong> - 客户端应用通过 SDK 接入</li>
+              <li><strong>网关层</strong> - 悟空拦截器负责安全防护</li>
+              <li><strong>服务层</strong> - 天枢消息枢纽 + 谛听策略服务</li>
+              <li><strong>SDK 层</strong> - 太白 Python SDK</li>
+            </ul>
+            
+            <h3>消息流</h3>
+            <div class="code-block">
+              <pre><code>Client → Wukong → TianShu → DiTing → Storage
+                ↓              ↓
+            Response      Ack</code></pre>
+            </div>
+          </div>
+
+          <!-- Deployment -->
+          <div class="doc-section" id="deployment">
+            <h2>部署指南</h2>
+            
+            <h3>Docker Compose 部署 (推荐)</h3>
+            <div class="code-block">
+              <pre><code># docker-compose.yaml
+version: '3.8'
+services:
+  tianshu:
+    image: ziwei/tianshu
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/ziwei
+      
+  diting:
+    image: ziwei/diting
+    ports:
+      - "8080:8080"
+      
+  wukong:
+    image: ziwei/wukong
+    ports:
+      - "8082:8082"</code></pre>
+            </div>
+            
+            <h3>Kubernetes 部署</h3>
+            <div class="code-block">
+              <pre><code>kubectl apply -f k8s/</code></pre>
+            </div>
+            
+            <div class="note note-success">
+              <strong>✅ 部署完成</strong>：服务启动后，访问 http://localhost:8081 查看天枢服务状态。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .docs-hero {
+    padding: 80px 0 60px;
+    background: 
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99, 102, 241, 0.1), transparent);
+    text-align: center;
+  }
+  
+  .docs-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .docs-hero p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+  
+  .docs-content {
+    padding: 40px 0 80px;
+  }
+  
+  .docs-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 48px;
+  }
+  
+  .docs-sidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  }
+  
+  .sidebar-nav {
+    border-left: 1px solid var(--border-color);
+    padding-left: 20px;
+  }
+  
+  .nav-section {
+    margin-bottom: 32px;
+  }
+  
+  .nav-section h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  
+  .nav-section a {
+    display: block;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    font-size: 0.95rem;
+  }
+  
+  .nav-section a:hover {
+    color: var(--accent-primary);
+  }
+  
+  .doc-section {
+    margin-bottom: 60px;
+    padding-top: 20px;
+  }
+  
+  .doc-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .doc-section h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    color: var(--text-primary);
+  }
+  
+  .doc-section p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+  
+  .doc-section ul {
+    margin: 16px 0;
+    padding-left: 24px;
+  }
+  
+  .doc-section li {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  
+  .code-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  
+  .code-block pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+  
+  .code-block .keyword { color: #c792ea; }
+  .code-block .function { color: #82aaff; }
+  .code-block .string { color: #c3e88d; }
+  .code-block .comment { color: #546e7a; }
+  
+  .note {
+    padding: 16px 20px;
+    background: rgba(99, 102, 241, 0.1);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+  }
+  
+  .note-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-left-color: var(--success);
+  }
+  
+  .note strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .api-table {
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+  
+  .api-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .api-table th,
+  .api-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .api-table th {
+    background: var(--bg-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .api-table td {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  .api-table code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-tertiary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  
+  @media (max-width: 900px) {
+    .docs-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .docs-sidebar {
+      position: static;
+      border-left: none;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+    
+    .sidebar-nav {
+      border-left: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    
+    .nav-section {
+      margin-bottom: 0;
+    }
+  }
+</style>
