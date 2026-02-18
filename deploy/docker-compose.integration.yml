@@ -12,6 +12,9 @@ services:
       - "8080:8080"
     environment:
       - CONFIG_PATH=/app/config.chain.yaml
+      - DITING_TIANSHU_ENABLED=${DITING_TIANSHU_ENABLED:-false}
+      - DITING_TIANSHU_BASE_URL=${DITING_TIANSHU_BASE_URL:-http://tianshu:8080}
+      - DITING_TIANSHU_GATEWAY_BASE_URL=${DITING_TIANSHU_GATEWAY_BASE_URL:-http://diting:8080}
     volumes:
       - diting-data:/app/data
       - ./deploy/diting-config-chain.yaml:/app/config.chain.yaml:ro
@@ -54,8 +57,9 @@ services:
     ports:
       - "8082:8080"
     environment:
-      - MATRIX_HOMESERVER=http://synapse:8008
-      - MATRIX_GATEWAY_USER=${MATRIX_GATEWAY_USER:-@gateway:matrix.local}
+      # 验证统一使用 NAS Synapse；改回本机则设 MATRIX_HOMESERVER=http://synapse:8008、MATRIX_GATEWAY_USER=@gateway:matrix.local
+      - MATRIX_HOMESERVER=${MATRIX_HOMESERVER:-http://xyin.oicp.net:8008}
+      - MATRIX_GATEWAY_USER=${MATRIX_GATEWAY_USER:-@gateway:xyin.oicp.net}
       - MATRIX_GATEWAY_TOKEN=${MATRIX_GATEWAY_TOKEN}
       - REGISTRATION_SHARED_SECRET=${REGISTRATION_SHARED_SECRET:-ziwei-gateway-dev-secret}
       - MATRIX_GATEWAY_TOKEN_FILE=/data/gateway_token
@@ -65,6 +69,9 @@ services:
       - DITING_CHAIN_URL=http://diting:8080/chain
       - DITING_INIT_PERMISSION_URL=http://diting:8080/init_permission
       - DITING_APPROVE_CALLBACK_URL=${DITING_APPROVE_CALLBACK_URL:-}
+      - NATIVE_DEMO_INVITE_USER=${NATIVE_DEMO_INVITE_USER:-@hulk:xyin.oicp.net}
+      - DELIVERY_ROOM_ID=${DELIVERY_ROOM_ID:-}
+      - APPROVAL_REPLY_VIA_MATRIX=${APPROVAL_REPLY_VIA_MATRIX:-false}
     env_file:
       - .env
     volumes:

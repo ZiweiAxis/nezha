@@ -7,7 +7,7 @@ proxy:
   allowed_api_keys: []
 
 policy:
-  rules_path: "policy_rules.example.yaml"
+  rules_path: "/app/policy_rules_test.yaml"
 
 cheq:
   timeout_seconds: 120
@@ -15,6 +15,12 @@ cheq:
   persistence_path: "./data/cheq"
 
 delivery:
+  # 天枢投递：enabled 且 base_url 配置时，审批发往天枢 DELIVERY_ROOM_ID（Matrix 房间）。可通过 DITING_TIANSHU_ENABLED=true、DITING_TIANSHU_BASE_URL 启用。
+  tianshu:
+    enabled: true
+    base_url: "http://localhost:8081"
+    gateway_base_url: "http://localhost:8080"
+    approval_policy: "any"
   feishu:
     app_id: ""
     enabled: true

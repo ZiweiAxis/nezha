@@ -10,7 +10,7 @@
 
 - Docker 或 Podman（含 Compose）
 - 飞书应用：创建企业自建应用，取得 **App ID**、**App Secret**；配置权限与事件（消息、卡片回调）；若用长连接需在后台开启「长连接」并配置验证 URL。
-- Matrix 网关用户：**使用根目录一键启动（§2）时无需填写 `MATRIX_GATEWAY_TOKEN`**——天枢会通过 `REGISTRATION_SHARED_SECRET` 自动向 Synapse 注册 `@gateway:matrix.local` 并持久化 token。仅当自举失败或你单独部署天枢接已有 Synapse 时，才需在 Synapse 中手动注册该用户并填写 `MATRIX_GATEWAY_TOKEN`。
+- Matrix 网关用户：**验证统一使用 NAS Synapse**（`xyin.oicp.net`）。使用根目录一键启动时无需填写 `MATRIX_GATEWAY_TOKEN`——天枢会通过 `REGISTRATION_SHARED_SECRET` 在 NAS Synapse 上自动注册 `@gateway:xyin.oicp.net` 并持久化 token。**NAS 上 Synapse 的 `registration_shared_secret` 必须与紫微一致**，见 **`deploy/NAS-Synapse-配置说明.md`**。原生渠道等验证均在手机 Element（如 @hulk:xyin.oicp.net）进行。若改回本机 Synapse，在 `.env` 中设置 `MATRIX_HOMESERVER=http://synapse:8008`、`MATRIX_GATEWAY_USER=@gateway:matrix.local`。
 
 ---
 
@@ -134,18 +134,51 @@ sudo bash /tmp/nas-push-synapse.sh
 | 天枢   | 8082     | /health、注册/发现等（容器内 8080） |
 | Synapse| 8008     | Matrix          |
 
+**无飞书 / 原生渠道验证**：不配飞书时，可用 **Matrix 房间** 作为天枢触达渠道，见 **`deploy/原生渠道验证步骤.md`**（调用 `GET /api/v1/delivery/native-demo` 后用 Element 加入房间查看投递消息）。
 **无飞书内部验证（可选）**：不配飞书时也可做本地验证。① 谛听 chain：`curl http://localhost:8080/chain/health` 应为 200。② 天枢→谛听 DID：`cd tianshu && DITING_CHAIN_URL=http://localhost:8080/chain python3 -m pytest tests/test_e2e_chain_did.py -v`。③ 太白 verification_agent：在 `taibai/examples/verification_agent` 下执行 `TIANSHU_API_BASE=http://localhost:8082 DITING_AUDIT_URL= python3 main.py`；天枢已暴露发现与 `POST /api/v1/agents/register`、`POST /api/v1/agents/heartbeat`，Step 1～3 可完整通过；Step 4 上报需谛听提供单条 action 审计接口（当前仅有 `/chain/audit/batch`），未配置 `DITING_AUDIT_URL` 时跳过。
 
 ---
 
-## 3. 飞书与谛听审批配置
+## 3. 悟空联通验证（可选）
 
-- **谛听**：当前使用镜像内默认 `config.example.yaml`；如需飞书审批卡片、审批人列表，需挂载自定义配置或通过环境变量覆盖（参见 `diting/cmd/diting/config.example.yaml` 与 `.env` 中 `DITING_FEISHU_*`）。
-- **审批链接**：飞书卡片内「批准/拒绝」链接指向谛听 `/cheq/approve`。若谛听在容器内，需保证该链接对用户可达（如公网域名或内网地址），可在谛听配置中设置 `gateway_base_url`。
+悟空为**宿主机 CLI**，不放入 docker-compose；在一键启动（§2）成功后，在宿主机安装并配置悟空，即可验证与天枢的联通。
+
+1. **确认天枢可达**  
+   `curl -s http://localhost:8082/health` 返回 200；`curl -s http://localhost:8082/api/v1/discovery` 返回含 `matrix_homeserver` 的 JSON。
+
+2. **安装悟空**  
+   ```bash
+   cd wukong && npm ci && npm run build
+   npm link   # 或使用 npx wukong
+   ```
+
+3. **配置环境变量**（宿主机）  
+   - `TIANSHU_API_URL=http://localhost:8082`（与上表天枢端口一致，不设则悟空默认即为此值）  
+   - 可选：`WUKONG_OWNER_ID=your-owner-id`（天枢注册时的 owner，不设则使用默认 `wukong-default-owner`）
+
+4. **注册身份并验证**  
+   ```bash
+   export TIANSHU_API_URL=http://localhost:8082
+   wukong identity --register my-agent --type claude
+   wukong list
+   ```  
+   预期：注册成功，`~/.wukong/identities.json` 中出现 `my-agent` 及天枢返回的 `agent_id`。
+
+5. **（可选）心跳**  
+   启动 Agent 后（如 `wukong claude --name my-agent --mode local`），悟空会向天枢上报心跳；可查看天枢日志确认收到。
+
+详见根技术文档 `docs/open/technical/紫微平台各模块集成方案.md` §4.1。
 
 ---
 
-## 4. Agent 自动注册与飞书确认
+## 4. 飞书与审批配置
+
+- **飞书凭证**：仅**天枢**使用。在仓库根目录 `.env` 中填写 `FEISHU_APP_ID`、`FEISHU_APP_SECRET`（详见 **`deploy/飞书对接配置说明.md`**）。架构上飞书投递经天枢，用户/审批人信息在天枢，谛听不直连飞书。
+- **审批流程**：谛听决策需审批时向天枢发起审批请求，天枢向飞书投递卡片；用户点击后飞书回调天枢，天枢再回传谛听。卡片内「批准/拒绝」回调地址为天枢对外暴露的 URL。
+
+---
+
+## 5. Agent 自动注册与飞书确认
 
 1. **启动一个 Agent**（如太白验证智能体或自研）：配置 `TIANSHU_API_BASE=http://<主机>:8082`，向天枢发起注册。
 2. **天枢**：落库身份、调用谛听 `DITING_INIT_PERMISSION_URL`（/init_permission）、DID 上链（DITING_CHAIN_URL）。
@@ -153,14 +186,14 @@ sudo bash /tmp/nas-push-synapse.sh
 
 ---
 
-## 5. 飞书下指令与谛听拦截审批
+## 6. 飞书下指令与谛听拦截审批
 
 - **下指令**：用户通过飞书发消息 → 天枢桥接 → 转至 Agent（Matrix 或 HTTP）。
 - **执行与拦截**：Agent 执行任务时经谛听（如调用 `POST /auth/exec` 或经谛听代理）；谛听策略为 **review** 时创建 CHEQ，向飞书推送审批卡片；用户批准/拒绝后谛听更新 CHEQ，Agent 侧根据结果继续或中止。
 
 ---
 
-## 6. 停止与清理
+## 7. 停止与清理
 
 ```bash
 docker compose -f deploy/docker-compose.integration.yml down

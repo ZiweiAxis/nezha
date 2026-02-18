@@ -2,6 +2,8 @@
 
 主仓（ziwei）与子项目天枢（tianshu）、谛听（diting）、太白（taibai）**各自独立 git**：主仓推 **NAS**，子项目开源推 **GitHub**，互不冲突。
 
+**基础规范**：所有子仓库在主仓中均为 **git submodule**。**BMAD 文档仍按 BMAD 规范存放在各子项目目录内**（如 `tianshu/_bmad-output/`、`diting/_bmad/`）；**Git 层面**由子仓 `.gitignore` 忽略上述路径、**由主仓跟踪并提交**这些文档。**悟空（wukong）** 及 **源于 wukong 的子项目**适用同一约定。
+
 ---
 
 ## ZiweiAxis 组织与仓库命名（统一约定）
@@ -13,6 +15,7 @@
 | **tianshu** | 天枢 | [ZiweiAxis/tianshu](https://github.com/ZiweiAxis/tianshu) | 仓库名 = 模块名 |
 | **diting** | 谛听 | [ZiweiAxis/diting](https://github.com/ZiweiAxis/diting) | 仓库名 = 模块名 |
 | **taibai** | 太白 | [ZiweiAxis/taibai](https://github.com/ZiweiAxis/taibai) | 仓库名 = 模块名 |
+| **wukong** | 悟空 | ZiweiAxis/wukong 或约定仓库 | Agent 生命周期管理器；源于 wukong 的子项目同此约定 |
 
 - 克隆/推送统一使用：`git@github.com:ZiweiAxis/<模块名>.git` 或 `https://github.com/ZiweiAxis/<模块名>.git`。
 - 迁移前若子仓在个人账号（如 hulk-yin/diting），迁移时把 `origin` 改为上述 ZiweiAxis 对应仓库即可。
@@ -25,12 +28,12 @@
 
 | 仓库 | 远程 | 说明 |
 |------|------|------|
-| **ziwei（主仓）** | `nas` → `nas:/volume2/homes/hulk/git/ziwei.git` | 主目录（docs、_bmad、_bmad-output、.cursor 等）+ 子项目下的 _bmad/_bmad-output；仅推 NAS |
+| **ziwei（主仓）** | `nas` → `nas:/volume2/homes/hulk/git/ziwei.git` | 主目录（docs、_bmad、_bmad-output、.cursor 等）+ 各子项目 BMAD 产出落在主仓路径（见下）；仅推 NAS |
 | **tianshu（天枢）** | `origin` → `ZiweiAxis/tianshu` | 在 `ziwei/tianshu` 下 `git push origin` |
 | **diting（谛听）** | `origin` → `ZiweiAxis/diting` | 在 `ziwei/diting` 下 `git push origin` |
 | **taibai（太白）** | `origin` → `ZiweiAxis/taibai` | 在 `ziwei/taibai` 下 `git push origin` |
 
-- 主仓 `git push nas` 只推送 ziwei 自己的提交与主仓内跟踪的文件（含子项目下的 _bmad、_bmad-output），**不会**改子项目的 GitHub 远程。
+- 主仓 `git push nas` 只推送 ziwei 自己的提交与主仓内跟踪的文件（含根 _bmad、_bmad-output 及主仓内维护的子项目 BMAD 文档），**不会**改子项目的 GitHub 远程。
 - 在 tianshu / diting / taibai 目录下 `git push origin` 只推送到各自 ZiweiAxis 仓库。
 - 日常：改主仓文档/规划 → `cd ziwei && git add . && git commit && git push nas`；改子项目代码 → 进对应目录 `git push origin`。
 
@@ -38,14 +41,11 @@
 
 ---
 
-## BMAD 输出：子仓忽略、紫微管理
+## BMAD 输出：子仓忽略、主仓跟踪
 
-- **子项目**（天枢、谛听）：在各自 `.gitignore` 中忽略 `_bmad/`、`_bmad-output/`，不纳入子仓版本。
-- **主仓（紫微）**：只跟踪并管理子项目下的 `_bmad/`、`_bmad-output/`，子项目其余代码不进入主仓。
-
-主仓 `.gitignore` 已配置为：忽略 `/tianshu/*`、`/diting/*`，但保留并跟踪  
-`tianshu/_bmad/`、`tianshu/_bmad-output/`、`diting/_bmad/`、`diting/_bmad-output/`。  
-天枢、谛听、太白各自的 `.gitignore` 中已包含 `_bmad/`、`_bmad-output/`（若适用），子仓不跟踪这部分内容。
+- **BMAD 文档位置**：各子项目的 BMAD 文档与产出**仍按 BMAD 规范存放在该子项目目录内**（如 `tianshu/_bmad-output/planning-artifacts/`、`diting/_bmad/`），不挪到主仓根路径。
+- **子项目**（天枢、谛听、太白、悟空及源于 wukong 的子项目）：在各自 `.gitignore` 中忽略 `_bmad/`、`_bmad-output/`，**不提交**这些路径；子仓仅提交代码。
+- **主仓（紫微）**：通过 .gitignore 配置**只跟踪**各子项目目录下的 `_bmad/`、`_bmad-output/`（不跟踪子项目其余代码），从而在 Git 上由主仓提交、推送这些 BMAD 文档。根目录自身的 `_bmad/`、`_bmad-output/` 也由主仓跟踪。
 
 ---
 

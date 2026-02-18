@@ -1,0 +1,17 @@
+{
+  "name": "my-claude-agent",
+  "type": "claude",
+  "mode": "local",
+  "workDir": "/home/user/projects/my-project",
+  "autoRestart": true,
+  "restartPolicy": {
+    "enabled": true,
+    "maxRetries": 3,
+    "delay": 5000,
+    "backoff": "exponential"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "API_KEY": "your-api-key"
+  }
+}
