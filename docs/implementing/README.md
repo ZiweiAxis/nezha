@@ -12,6 +12,14 @@
 
 此目录由 **BMAD 管理**，通过 `_bmad` 目录下的 workflows/tasks 进行追踪。
 
+## 实现文档
+
+| 文档 | 说明 |
+|------|------|
+| [架构设计](./架构设计.md) | 紫微平台整体架构设计文档 |
+| [Matrix 通信](./matrix-communication.md) | Matrix 通信模式与 DID 方案 |
+| [端口规范](./ports.md) | 组件端口分配规范 |
+
 ## 示例
 
 - CHEQ 确认引擎实现
