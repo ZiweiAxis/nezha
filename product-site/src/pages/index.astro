@@ -1,0 +1,511 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="首页">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="badge">✨ 下一代多智能体治理平台</div>
+        <h1>让 AI Agents <span class="gradient-text">协同工作</span> 更简单</h1>
+        <p class="hero-desc">
+          紫微 (Ziwei) 是一个功能强大的多智能体治理平台，提供消息枢纽、策略服务、拦截器和 Python SDK，
+          帮助开发者快速构建和部署 AI Agent 应用。
+        </p>
+        <div class="hero-actions">
+          <a href="/docs" class="btn btn-primary">快速开始 →</a>
+          <a href="https://github.com/ziwei-ai" target="_blank" class="btn btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            查看 GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>核心组件</h2>
+        <p>四大核心模块，赋能多智能体应用</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h3>天枢</h3>
+          <p class="feature-tagline">消息枢纽</p>
+          <p>统一的消息路由和分发中心，支持多协议接入，实现 Agent 间的高效通信。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3>谛听</h3>
+          <p class="feature-tagline">策略服务</p>
+          <p>智能策略引擎，支持复杂业务规则的配置和管理，让 Agent 决策更智能。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>悟空</h3>
+          <p class="feature-tagline">拦截器</p>
+          <p>请求拦截与过滤中间件，提供安全防护、内容审核和流量控制能力。</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon" style="background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <h3>太白</h3>
+          <p class="feature-tagline">Python SDK</p>
+          <p>简洁易用的 Python 开发套件，助您快速集成紫微平台能力到应用中。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section class="architecture">
+    <div class="container">
+      <div class="section-header">
+        <h2>系统架构</h2>
+        <p>模块化设计，灵活可扩展</p>
+      </div>
+      <div class="arch-diagram">
+        <div class="arch-layer">
+          <div class="arch-label">应用层</div>
+          <div class="arch-components">
+            <div class="arch-box client">客户端应用</div>
+          </div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer">
+          <div class="arch-label">网关层</div>
+          <div class="arch-components">
+            <div class="arch-box wukong">悟空<br/><span>拦截器</span></div>
+          </div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer">
+          <div class="arch-label">服务层</div>
+          <div class="arch-components">
+            <div class="arch-box tianshu">天枢<br/><span>消息枢纽</span></div>
+            <div class="arch-box diting">谛听<br/><span>策略服务</span></div>
+          </div>
+        </div>
+        <div class="arch-connector"></div>
+        <div class="arch-layer">
+          <div class="arch-label">SDK</div>
+          <div class="arch-components">
+            <div class="arch-box taibai">太白<br/><span>Python SDK</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">4+</div>
+          <div class="stat-label">核心组件</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">MIT</div>
+          <div class="stat-label">开源协议</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Python</div>
+          <div class="stat-label">SDK 支持</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">99%</div>
+          <div class="stat-label">可扩展性</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>准备好开始了吗？</h2>
+        <p>查看文档，快速集成紫微到您的项目中</p>
+        <div class="cta-actions">
+          <a href="/docs" class="btn btn-primary">阅读文档</a>
+          <a href="/about" class="btn btn-outline">联系我们</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 120px 0 100px;
+    overflow: hidden;
+  }
+  
+  .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.1), transparent),
+      radial-gradient(ellipse 50% 30% at 20% 80%, rgba(168, 85, 247, 0.08), transparent);
+    pointer-events: none;
+  }
+  
+  .hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    margin-bottom: 24px;
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  
+  .gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-desc {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .btn-primary {
+    background: var(--accent-gradient);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+  }
+  
+  .btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
+  }
+  
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-outline:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+  
+  /* Features */
+  .features {
+    padding: 100px 0;
+    background: var(--bg-secondary);
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .section-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  
+  .feature-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .feature-tagline {
+    color: var(--accent-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  
+  .feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  
+  /* Architecture */
+  .architecture {
+    padding: 100px 0;
+  }
+  
+  .arch-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .arch-label {
+    width: 80px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  
+  .arch-components {
+    flex: 1;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .arch-box {
+    padding: 20px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .arch-box span {
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  
+  .arch-box.client { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
+  .arch-box.wukong { background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); }
+  .arch-box.tianshu { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
+  .arch-box.diting { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); }
+  .arch-box.taibai { background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.4); }
+  
+  .arch-connector {
+    width: 2px;
+    height: 20px;
+    background: var(--border-color);
+    margin-left: 99px;
+  }
+  
+  /* Stats */
+  .stats {
+    padding: 80px 0;
+    background: var(--bg-secondary);
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 3rem;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .stat-label {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-top: 8px;
+  }
+  
+  /* CTA */
+  .cta {
+    padding: 100px 0;
+  }
+  
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 60px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+  }
+  
+  .cta h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+  
+  .cta p {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+  }
+  
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .hero-desc {
+      font-size: 1rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .arch-layer {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .arch-label {
+      width: auto;
+      text-align: center;
+    }
+    
+    .arch-connector {
+      margin-left: 0;
+      width: 2px;
+      height: 16px;
+    }
+    
+    .cta-content {
+      padding: 40px 24px;
+    }
+  }
+</style>

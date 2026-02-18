@@ -1,0 +1,415 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="关于">
+  <section class="about-hero">
+    <div class="container">
+      <h1>关于紫微</h1>
+      <p>构建下一代多智能体治理平台</p>
+    </div>
+  </section>
+
+  <section class="about-content">
+    <div class="container">
+      <!-- Mission -->
+      <div class="about-section">
+        <div class="section-icon">🎯</div>
+        <h2>我们的使命</h2>
+        <p>
+          紫微 (Ziwei) 致力于打造一个开放、高效、可扩展的多智能体治理平台。
+          我们相信，随着 AI 技术的快速发展，多智能体协同将成为未来的主流范式。
+          紫微平台通过提供统一的消息枢纽、智能策略引擎、安全拦截器和易用的 SDK，
+          帮助开发者快速构建和部署复杂的多智能体应用。
+        </p>
+      </div>
+
+      <!-- Components -->
+      <div class="about-section">
+        <div class="section-icon">🧩</div>
+        <h2>四大核心组件</h2>
+        <p>紫微平台由四个核心组件组成，各自承担不同职责：</p>
+        
+        <div class="components-grid">
+          <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">✦</div>
+            <h3>天枢</h3>
+            <p>消息枢纽</p>
+            <span>统一的消息路由和分发中心，支持多协议接入，实现 Agent 间的高效通信。</span>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #10b981, #059669);">⚡</div>
+            <h3>谛听</h3>
+            <p>策略服务</p>
+            <span>智能策略引擎，支持复杂业务规则的配置和管理，让 Agent 决策更智能。</span>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">🛡️</div>
+            <h3>悟空</h3>
+            <p>拦截器</p>
+            <span>请求拦截与过滤中间件，提供安全防护、内容审核和流量控制能力。</span>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">💻</div>
+            <h3>太白</h3>
+            <p>Python SDK</p>
+            <span>简洁易用的 Python 开发套件，助您快速集成紫微平台能力到应用中。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="about-section">
+        <div class="section-icon">💎</div>
+        <h2>核心价值观</h2>
+        
+        <div class="values-grid">
+          <div class="value-item">
+            <h3>开放</h3>
+            <p>完全开源，MIT 许可证，欢迎社区贡献</p>
+          </div>
+          <div class="value-item">
+            <h3>简洁</h3>
+            <p>设计简洁，API 易用，降低集成门槛</p>
+          </div>
+          <div class="value-item">
+            <h3>可扩展</h3>
+            <p>模块化设计，灵活扩展，满足定制需求</p>
+          </div>
+          <div class="value-item">
+            <h3>可靠</h3>
+            <p>稳定可靠的生产级质量保证</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team -->
+      <div class="about-section" id="team">
+        <div class="section-icon">👥</div>
+        <h2>团队</h2>
+        <p>紫微项目由一支充满热情的团队开发和维护。</p>
+        
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">Z</div>
+            <h3>紫微团队</h3>
+            <p>核心开发者</p>
+          </div>
+        </div>
+        
+        <div class="contributors">
+          <h3>贡献者</h3>
+          <p>感谢所有为紫微项目做出贡献的开发者！</p>
+          <a href="https://github.com/ziwei-ai" target="_blank" class="github-contributors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            在 GitHub 上查看
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="about-section" id="contact">
+        <div class="section-icon">📬</div>
+        <h2>联系方式</h2>
+        <p>我们欢迎各种形式的交流与合作。</p>
+        
+        <div class="contact-grid">
+          <a href="https://github.com/ziwei-ai" target="_blank" class="contact-card">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <h3>GitHub</h3>
+            <p>查看源码、提交 Issue、参与贡献</p>
+          </a>
+          
+          <div class="contact-card">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <h3>Email</h3>
+            <p>contact@ziwei-ai.github.io</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- License -->
+      <div class="about-section">
+        <div class="section-icon">📜</div>
+        <h2>开源协议</h2>
+        <p>紫微项目基于 MIT 许可证开源，您可以自由使用、修改和分发本项目。</p>
+        <a href="https://github.com/ziwei-ai" target="_blank" class="btn-link">
+          查看 LICENSE →
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .about-hero {
+    padding: 80px 0 60px;
+    background: 
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99, 102, 241, 0.1), transparent);
+    text-align: center;
+  }
+  
+  .about-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  .about-hero p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+  }
+  
+  .about-content {
+    padding: 60px 0 80px;
+  }
+  
+  .about-section {
+    max-width: 900px;
+    margin: 0 auto 80px;
+  }
+  
+  .section-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  
+  .about-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  
+  .about-section > p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  
+  /* Components Grid */
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  
+  .component-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .component-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+  }
+  
+  .component-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin: 0 auto 16px;
+  }
+  
+  .component-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .component-card p {
+    color: var(--accent-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  
+  .component-card span {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  
+  /* Values Grid */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  
+  .value-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .value-item h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--accent-primary);
+  }
+  
+  .value-item p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  /* Team */
+  .team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .team-card {
+    text-align: center;
+    padding: 32px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 200px;
+  }
+  
+  .team-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 auto 16px;
+  }
+  
+  .team-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+  
+  .team-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  
+  .contributors {
+    text-align: center;
+    padding: 32px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+  }
+  
+  .contributors h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  
+  .contributors > p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  
+  .github-contributors {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .github-contributors:hover {
+    background: var(--accent-primary);
+  }
+  
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .contact-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+  }
+  
+  .contact-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+  }
+  
+  .contact-card svg {
+    color: var(--accent-primary);
+    margin-bottom: 16px;
+  }
+  
+  .contact-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .contact-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+  
+  /* License */
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-primary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-link:hover {
+    gap: 12px;
+  }
+  
+  @media (max-width: 768px) {
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .team-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
