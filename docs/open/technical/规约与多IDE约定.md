@@ -62,9 +62,9 @@
 
 ### 4.5 子项目 agent.md 与自动加载（Cursor、Claude、Codex）
 
-- **子项目自认约束**：各子项目（tianshu、diting、taibai、wukong）在**其根目录**提供 **agent.md**，内容为该子项目自认的 Agent 规约（身份与职责、任务消费与获取、必守规约及参考文档）。
+- **子项目自认约束**：各子项目（tianshu、xiezhi、taibai、wukong）在**其根目录**提供 **agent.md**，内容为该子项目自认的 Agent 规约（身份与职责、任务消费与获取、必守规约及参考文档）。
 - **自动加载方式**（三种 IDE 均支持）：
-  - **工作区为紫微主仓（ziwei）**：根目录 `.cursor/rules/subproject-agent-constraints.mdc` 约定，当当前文件或任务位于 `tianshu/`、`diting/`、`taibai/`、`wukong/` 之一时，**同时加载**该子项目根目录的 **agent.md**，与根 **AGENTS.md** 一并遵守。
+  - **工作区为紫微主仓（ziwei）**：根目录 `.cursor/rules/subproject-agent-constraints.mdc` 约定，当当前文件或任务位于 `tianshu/`、`xiezhi/`、`taibai/`、`wukong/` 之一时，**同时加载**该子项目根目录的 **agent.md**，与根 **AGENTS.md** 一并遵守。
   - **工作区为子项目目录**（如单独打开 `ziwei/tianshu`）：该子项目下配置的 `.cursor/rules/agent-constraints.mdc`、`.claude/project-context.md`、`.codex/prompts/agent-constraints.md` 指示「读取并遵守本目录的 agent.md」；若存在上级根 **AGENTS.md**，一并遵守。
 - **统一性**：Cursor、Claude Code CLI、Codex 任一种环境下，只要进入或打开子项目，即可自动读取对应 **agent.md** 约束，无需每次手动指定。
 

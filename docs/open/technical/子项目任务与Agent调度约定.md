@@ -9,7 +9,7 @@
 ## 1. 原则
 
 - **根（紫微）**：平台级规划、里程碑、跨模块联调约定、文档与 Epic 映射；识别哪些任务属于哪个子模块。
-- **子项目（天枢 / 谛听 / 太白）**：本模块内的 Issue/Story 实现、代码与配置变更、子项目内 BMAD 工作流；由**该子项目上下文下的 Agent** 执行，且须**按 BMAD 规范做角色与工作流对齐**（见 §5）。
+- **子项目（天枢 / 獬豸 / 太白）**：本模块内的 Issue/Story 实现、代码与配置变更、子项目内 BMAD 工作流；由**该子项目上下文下的 Agent** 执行，且须**按 BMAD 规范做角色与工作流对齐**（见 §5）。
 
 ---
 
@@ -19,7 +19,7 @@
 
 1. **不**在主仓会话中直接修改子项目代码或子项目专属配置。
 2. **应**将执行调度到子 Agent：
-   - 在对应子项目目录（`ziwei/diting`、`ziwei/tianshu`、`ziwei/taibai`）下打开或切换会话，使 Agent 运行在该子项目的 `.cursor/rules`、`_bmad`、`ISSUE_LIST` 等上下文中；
+   - 在对应子项目目录（`ziwei/xiezhi`、`ziwei/tianshu`、`ziwei/taibai`）下打开或切换会话，使 Agent 运行在该子项目的 `.cursor/rules`、`_bmad`、`ISSUE_LIST` 等上下文中；
    - 或产出明确的「待子项目执行」任务说明与验收条件，由用户或自动化在子项目目录交付给子 Agent。
 3. 若使用支持「按路径/工作区路由」的调度方式，可配置为：任务目标路径属于某子项目时，自动在子项目工作区启动或委托子 Agent。
 
@@ -30,8 +30,8 @@
 | 任务类型 | 归属 | 执行位置 |
 |----------|------|----------|
 | 更新平台 Epic 映射、根技术方案、根规划梳理 | 根 | 主仓（ziwei）Agent |
-| diting I-016/I-017/I-018 实现、diting 配置/代码变更 | 谛听 | 子 Agent（ziwei/diting） |
-| tianshu 对接谛听 DID、tianshu 代码/架构变更 | 天枢 | 子 Agent（ziwei/tianshu） |
+| xiezhi I-016/I-017/I-018 实现、xiezhi 配置/代码变更 | 獬豸 | 子 Agent（ziwei/xiezhi） |
+| tianshu 对接獬豸 DID、tianshu 代码/架构变更 | 天枢 | 子 Agent（ziwei/tianshu） |
 | taibai SDK、verification_agent、taibai 文档 | 太白 | 子 Agent（ziwei/taibai） |
 | 跨模块联调约定、接口契约、里程碑验收标准 | 根 | 主仓 Agent；具体实现仍由各子 Agent 在各自仓内执行 |
 

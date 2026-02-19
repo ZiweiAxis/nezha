@@ -1,6 +1,6 @@
 # BMAD 多子项目管理 — 官方文档与最佳实践
 
-**目的**：基于 BMAD 官方文档与社区信息，整理「用 BMAD 同时管理多个子项目」的推荐做法，供紫微仓库（天枢、谛听、太白等）参考。
+**目的**：基于 BMAD 官方文档与社区信息，整理「用 BMAD 同时管理多个子项目」的推荐做法，供紫微仓库（天枢、獬豸、太白等）参考。
 
 **文档日期**：2026-02-13  
 **参考来源**：docs.bmad-method.org、GitHub bmad-code-org/BMAD-METHOD、社区讨论与 Issue。
@@ -52,7 +52,7 @@
 
 紫微当前是：
 
-- `ziwei/diting/` — 自有 `_bmad/`、`_bmad-output/`
+- `ziwei/xiezhi/` — 自有 `_bmad/`、`_bmad-output/`
 - `ziwei/tianshu/` — 自有 `_bmad/`、`_bmad-output/`
 
 这与官方「每项目一 _bmad」的模型一致，无需改为「只在 ziwei 根目录装一套 BMAD」。
@@ -64,7 +64,7 @@
 - **根目录**（如 `ziwei/`）：  
   - 可选安装 BMAD，用于**跨子项目的规划**：如总体 PRD、总体 architecture（含 Integration、Standards and Conventions、ADR）。  
   - 产出放在根目录的 `_bmad-output/` 或 `docs/`，供各子项目引用。
-- **各子项目**（diting、tianshu 等）：  
+- **各子项目**（xiezhi、tianshu 等）：  
   - 保留各自 `_bmad/`、`_bmad-output/`，用于本子项目的 Phase 2–4（PRD 可继承根目录或本地细化，architecture 引用根目录 + 本地 ADR）。  
 
 这样既保留「每个子项目独立跑 BMAD 工作流」的能力，又有一份**跨子项目的统一架构与约定**。
@@ -110,13 +110,13 @@
 
 | 维度 | 建议 |
 |------|------|
-| **目录** | 保持 **每个子项目（diting、tianshu 等）各自 `_bmad/`、`_bmad-output/`**；若要做跨子项目统一规划，可在 `ziwei/` 根目录再装一套 BMAD 或仅在根目录维护共享的 architecture/ADR。 |
+| **目录** | 保持 **每个子项目（xiezhi、tianshu 等）各自 `_bmad/`、`_bmad-output/`**；若要做跨子项目统一规划，可在 `ziwei/` 根目录再装一套 BMAD 或仅在根目录维护共享的 architecture/ADR。 |
 | **架构** | 使用 **create-architecture** 产出/更新 **总体** architecture（含 Integration、Standards and Conventions、ADR），子项目实现时引用该文档并遵守约定。 |
 | **规划** | 跨子项目需求在总体 PRD 或根目录规划中体现；子项目 PRD/epics 与总体对齐，必要时子项目内再细化。 |
 | **实现** | 各子项目在各自目录下跑 create-story / dev-story / code-review，产出保留在各自 `_bmad-output/`。 |
 | **文档** | 根目录 `ziwei/docs/` 存放跨子项目技术方案与架构图；各子项目 `docs/` 与 `_bmad-output/` 存放本子项目专属文档与 BMAD 产物。 |
 
-这样既符合 BMAD 官方「一项目一 _bmad」与「多子项目用架构工作流统一决策」的设定，又和当前紫微（天枢、谛听各自 BMAD）的结构兼容，并便于后续加入太白等更多子项目时复用同一套约定与流程。
+这样既符合 BMAD 官方「一项目一 _bmad」与「多子项目用架构工作流统一决策」的设定，又和当前紫微（天枢、獬豸各自 BMAD）的结构兼容，并便于后续加入太白等更多子项目时复用同一套约定与流程。
 
 ---
 

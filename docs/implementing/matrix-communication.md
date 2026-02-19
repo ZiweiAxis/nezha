@@ -7,7 +7,7 @@
 ## Matrix 环境
 
 - **唯一 Matrix 服务器**: `xyin.oicp.net:8008`
-- **所有用户（人类、Agent、谛听）都注册在此服务器上**
+- **所有用户（人类、Agent、獬豸）都注册在此服务器上**
 
 ## 用户身份 (DID)
 
@@ -15,7 +15,7 @@
 |------|----------|----------|
 | Owner (真实人类) | 自己注册 | `did:human:xxx` |
 | 审批人 | 固定配置 (hulk) | - |
-| 谛听 | 系统初始化自动注册 | `did:agent:diting` |
+| 獬豸 | 系统初始化自动注册 | `did:agent:xiezhi` |
 | Agent | 悟空触发自动注册 | `did:agent:xxx` |
 
 ## 通信模式
@@ -29,20 +29,20 @@
 ### 1. 审批通知：DM 私聊
 
 ```
-悟空 → 谛听（决策需要审批）
+悟空 → 獬豸（决策需要审批）
           ↓
     天枢（路由管理，返回审批人）
           ↓
-    @diting → 发送 DM 给审批人 (@hulk)
+    @xiezhi → 发送 DM 给审批人 (@hulk)
               ↓
-    @diting → 监听审批回复（关键！）
+    @xiezhi → 监听审批回复（关键！）
               ↓
-    @diting → 调用 /cheq/approve
+    @xiezhi → 调用 /cheq/approve
 ```
 
-- 发送方身份：谛听 (`did:agent:diting`)
+- 发送方身份：獬豸 (`did:agent:xiezhi`)
 - 接收方：审批人 (@hulk)
-- **回复处理**：@diting 自己监听，不需要 gateway 介入
+- **回复处理**：@xiezhi 自己监听，不需要 gateway 介入
 
 ### 2. Agent ↔ Owner：DM 私聊
 
@@ -65,14 +65,14 @@ Owner → 发送指令
 
 ### 消息监听架构
 
-每个 Agent（包括谛听）都需要：
+每个 Agent（包括獬豸）都需要：
 1. **独立的 Matrix token**
 2. **自己的 Matrix 客户端监听**
 3. **处理自己消息的回复**
 
 ```
 ┌─────────────┐     Matrix      ┌─────────────┐
-│   谛听      │ ◄──────────────►│   Matrix    │
+│   獬豸      │ ◄──────────────►│   Matrix    │
 │  (Agent)    │   发送+监听     │   服务器    │
 └─────────────┘                 └─────────────┘
 
@@ -92,6 +92,6 @@ Owner → 发送指令
 
 ## 实现要点
 
-1. **谛听 DID 自动注册** - 系统初始化时自动注册 `did:agent:diting`
+1. **獬豸 DID 自动注册** - 系统初始化时自动注册 `did:agent:xiezhi`
 2. **DID 发送逻辑** - gateway 以对应智能体 DID 身份发送消息
 3. **Agent ↔ Owner DM** - 创建 agent 与 owner 的 DM

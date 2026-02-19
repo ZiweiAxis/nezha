@@ -90,12 +90,12 @@
 
 ### 2.2 技术模块对标
 
-#### 🎯 对标 #1：DSPM（数据安全态势管理）↔ 谛听审计存证
+#### 🎯 对标 #1：DSPM（数据安全态势管理）↔ 獬豸审计存证
 
 **重合度：🟡 40%**
 
 **Cyera DSPM**：扫描云端数据，ML 分类敏感信息  
-**紫微谛听**：采集智能体操作日志，分类操作类型
+**紫微獬豸**：采集智能体操作日志，分类操作类型
 
 **差异点**：
 - Cyera 扫描**静态数据**，紫微记录**动态行为**
@@ -106,12 +106,12 @@
 
 ---
 
-#### 🎯 对标 #2：DLP（数据泄露防护）↔ 谛听策略拦截
+#### 🎯 对标 #2：DLP（数据泄露防护）↔ 獬豸策略拦截
 
 **重合度：🟢 70%**
 
 **Cyera DLP**：策略驱动的阻止、加密、审批  
-**紫微谛听**：策略驱动的允许、拒绝、人工审批（分级）
+**紫微獬豸**：策略驱动的允许、拒绝、人工审批（分级）
 
 **差异点**：
 - Cyera 检测**数据内容**，紫微检测**操作意图**
@@ -138,12 +138,12 @@
 
 ---
 
-#### 🎯 对标 #4：UEBA（行为分析）↔ 谛听全行为 Trace
+#### 🎯 对标 #4：UEBA（行为分析）↔ 獬豸全行为 Trace
 
 **重合度：🟢 60%**
 
 **Cyera UEBA**：用户登录、数据访问、文件操作  
-**紫微谛听**：智能体操作、API 调用、命令执行
+**紫微獬豸**：智能体操作、API 调用、命令执行
 
 **差异点**：
 - 采集对象不同（**人 vs 智能体**）
@@ -172,10 +172,10 @@
 
 **紫微功能 → 建议术语 → 对标 Cyera**
 
-1. **谛听审计存证** → **ASPM**（Agent Security Posture Management）→ 对标 DSPM
-2. **谛听策略拦截** → **ABP**（Agent Behavior Prevention）→ 对标 DLP
+1. **獬豸审计存证** → **ASPM**（Agent Security Posture Management）→ 对标 DSPM
+2. **獬豸策略拦截** → **ABP**（Agent Behavior Prevention）→ 对标 DLP
 3. **天枢身份管理** → **AIEM**（Agent Identity & Entitlement Management）→ 对标 CIEM
-4. **谛听全行为 Trace** → **ABAA**（Agent Behavior Analytics & Audit）→ 对标 UEBA
+4. **獬豸全行为 Trace** → **ABAA**（Agent Behavior Analytics & Audit）→ 对标 UEBA
 
 ### 3.2 对外表述建议
 
@@ -202,7 +202,7 @@
 - **AIEM**（Agent Identity & Entitlement Management）- 智能体身份与权限管理
 - **ABAA**（Agent Behavior Analytics & Audit）- 智能体行为分析与审计
 - **DID**（Decentralized Identifier）- 去中心化标识符（W3C 标准）
-- **3AF**（AI Agent Audit & Firewall）- AI 智能体审计与防火墙（谛听品牌名）
+- **3AF**（AI Agent Audit & Firewall）- AI 智能体审计与防火墙（獬豸品牌名）
 
 ---
 

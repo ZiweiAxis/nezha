@@ -9,7 +9,7 @@
 | 组件 | 服务名 | 默认端口 | 协议 | 说明 |
 |------|--------|----------|------|------|
 | **天枢** | tianshu | **8081** | HTTP | 网关服务 API |
-| **谛听** | diting | **8080** | HTTP | 策略服务 + 审批服务 |
+| **獬豸** | xiezhi | **8080** | HTTP | 策略服务 + 审批服务 |
 | **悟空** | wukong | **8082** | HTTP | 拦截器服务 |
 | **Synapse** | synapse | **8008** | HTTP | Matrix homeserver |
 | **Synapse** | synapse | **8448** | HTTPS | Matrix federation (SSL) |
@@ -41,7 +41,7 @@ services:
       - "8008:8008"   # HTTP
       - "8448:8448"   # Federation
 
-  diting:
+  xiezhi:
     ports:
       - "8080:8080"
 
@@ -61,7 +61,7 @@ services:
 export Tianshu_PORT=8081
 export MATRIX_HOMESERVER=http://localhost:8008
 
-# 谛听
+# 獬豸
 export DITING_PORT=8080
 
 # 悟空
@@ -71,7 +71,7 @@ export WUKONG_PORT=8082
 ## 历史变更
 
 - **2026-02-17**: 初始版本，定义四大组件端口
-  - 天枢: 8081 (原 8080 与 diting 冲突)
-  - 谛听: 8080
+  - 天枢: 8081 (原 8080 与 xiezhi 冲突)
+  - 獬豸: 8080
   - 悟空: 8082 (新增)
   - Synapse: 8008
