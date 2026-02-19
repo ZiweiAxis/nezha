@@ -57,7 +57,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <h3>谛听</h3>
           <p class="feature-tagline">策略服务</p>
-          <p>智能策略引擎，支持复杂业务规则的配置和管理，让 Agent 决策更智能。</p>
+          <p>策略引擎 + 决策引擎 + 审批模块 + 审计存储 + 消息投递，为悟空提供全方位的策略决策支持。</p>
         </div>
         
         <div class="feature-card">
@@ -67,8 +67,8 @@ import Layout from '../layouts/Layout.astro';
             </svg>
           </div>
           <h3>悟空</h3>
-          <p class="feature-tagline">执行控制器</p>
-          <p>Agent 端策略执行点 (PEP)，提供操作拦截、策略评估和任务挂起能力，确保 Agent 行为安全可控。</p>
+          <p class="feature-tagline">执行控制器 (PEP)</p>
+          <p>Agent 端策略执行点，内置谛听客户端，提供操作拦截、策略评估和任务挂起能力，确保 Agent 行为安全可控。</p>
         </div>
         
         <div class="feature-card">
@@ -94,39 +94,14 @@ import Layout from '../layouts/Layout.astro';
         <p>模块化设计，灵活可扩展</p>
       </div>
       <div class="arch-diagram">
-        <div class="arch-layer">
-          <div class="arch-label">应用层</div>
-          <div class="arch-components">
-            <div class="arch-box client">客户端应用</div>
-          </div>
-        </div>
-        <div class="arch-connector"></div>
-        <div class="arch-layer">
-          <div class="arch-label">PEP 层</div>
-          <div class="arch-components">
-            <div class="arch-box wukong">悟空<br/><span>执行控制器</span></div>
-          </div>
-        </div>
-        <div class="arch-connector"></div>
-        <div class="arch-layer">
-          <div class="arch-label">消息层</div>
-          <div class="arch-components">
-            <div class="arch-box tianshu">天枢<br/><span>消息枢纽</span></div>
-          </div>
-        </div>
-        <div class="arch-connector"></div>
-        <div class="arch-layer">
-          <div class="arch-label">PDP+PAP</div>
-          <div class="arch-components">
-            <div class="arch-box diting">谛听<br/><span>策略引擎</span></div>
-          </div>
-        </div>
-        <div class="arch-connector"></div>
-        <div class="arch-layer">
-          <div class="arch-label">SDK</div>
-          <div class="arch-components">
-            <div class="arch-box taibai">太白<br/><span>Python SDK</span></div>
-          </div>
+        <div class="arch-flow">
+          <div class="arch-box client">客户端应用</div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box wukong">悟空<br/><span>执行控制器<br/>(含谛听客户端)</span></div>
+          <div class="arch-arrow">↔</div>
+          <div class="arch-box diting">谛听<br/><span>策略引擎 + 决策引擎<br/>审批模块 + 审计存储</span></div>
+          <div class="arch-arrow">↔</div>
+          <div class="arch-box tianshu">天枢<br/><span>消息枢纽</span></div>
         </div>
       </div>
     </div>
@@ -361,62 +336,47 @@ import Layout from '../layouts/Layout.astro';
   }
   
   .arch-diagram {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
   }
   
-  .arch-layer {
+  .arch-flow {
     display: flex;
     align-items: center;
-    gap: 20px;
-  }
-  
-  .arch-label {
-    width: 80px;
-    text-align: right;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-  
-  .arch-components {
-    flex: 1;
-    display: flex;
-    gap: 12px;
     justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
   
-  .arch-box {
-    padding: 20px 32px;
+  .arch-flow .arch-box {
+    padding: 20px 24px;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: center;
+    min-width: 140px;
     transition: all 0.3s ease;
   }
   
-  .arch-box span {
-    font-size: 0.8rem;
+  .arch-flow .arch-box span {
+    display: block;
+    font-size: 0.75rem;
     font-weight: 400;
-    opacity: 0.8;
+    opacity: 0.85;
+    margin-top: 6px;
   }
   
-  .arch-box.client { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
-  .arch-box.wukong { background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); }
-  .arch-box.tianshu { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
-  .arch-box.diting { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); }
-  .arch-box.taibai { background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.4); }
-  
-  .arch-connector {
-    width: 2px;
-    height: 20px;
-    background: var(--border-color);
-    margin-left: 99px;
+  .arch-arrow {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    font-weight: 300;
   }
+  
+  .arch-flow .arch-box.client { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
+  .arch-flow .arch-box.wukong { background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.4); }
+  .arch-flow .arch-box.tianshu { background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(99, 102, 241, 0.4); }
+  .arch-flow .arch-box.diting { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); }
+  .arch-flow .arch-box.taibai { background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.4); }
   
   /* Stats */
   .stats {
