@@ -12,6 +12,11 @@
 - **BMAD 文档按 BMAD 规范仍在子项目目录内**：各子项目的 BMAD 文档与产出（PRD、架构、Epics、`_bmad/`、`_bmad-output/planning-artifacts` 等）**依然按 BMAD 规范存放在该子项目目录下**（如 `tianshu/_bmad-output/`、`diting/_bmad/`），不挪到主仓根路径。
 - **Git 层面**：子项目仓库在 `.gitignore` 中**忽略** `_bmad/`、`_bmad-output/`，不提交这些文档；**主仓**负责**跟踪并提交**各子项目下的 `_bmad/`、`_bmad-output/`，从而实现「文档在子项目里、版本由主仓管」。
 
+## Git 提交原则
+
+- **主项目与子项目一起提交**：每次提交时，必须同时检查并提交主项目和所有子项目（tianshu、diting、taibai、wukong）的更改，确保版本一致性。
+- **提交前检查子项目状态**：使用 `git status` 分别检查主项目和每个子项目的修改情况，确保没有遗漏。
+
 ## 仓库与 Git
 
 - **主仓（ziwei）**：推 NAS；跟踪根目录 `docs/`、`_bmad/`、`_bmad-output/`，以及各子项目目录下的 `_bmad/`、`_bmad-output/`；子项目其余代码不进入主仓。
