@@ -1,0 +1,100 @@
+# 紫微平台一键启动（飞书端到端）：Synapse + 天枢 + 谛听
+# 在 ziwei 仓库根目录执行：docker compose -f deploy/docker-compose.integration.yml up -d
+# 详见 deploy/README.md
+
+services:
+  diting:
+    build:
+      context: ./diting
+      dockerfile: deployments/docker/Dockerfile.diting
+    container_name: ziwei-diting
+    ports:
+      - "8080:8080"
+    environment:
+      - CONFIG_PATH=/app/config.chain.yaml
+      - DITING_TIANSHU_ENABLED=${DITING_TIANSHU_ENABLED:-false}
+      - DITING_TIANSHU_BASE_URL=${DITING_TIANSHU_BASE_URL:-http://tianshu:8080}
+      - DITING_TIANSHU_GATEWAY_BASE_URL=${DITING_TIANSHU_GATEWAY_BASE_URL:-http://diting:8080}
+    volumes:
+      - diting-data:/app/data
+      - ./deploy/diting-config-chain.yaml:/app/config.chain.yaml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/healthz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - ziwei-net
+
+  synapse:
+    image: ${SYNAPSE_IMAGE:-matrixdotorg/synapse:v1.100.0}
+    container_name: ziwei-synapse
+    ports:
+      - "8008:8008"
+    environment:
+      SYNAPSE_SERVER_NAME: matrix.local
+      SYNAPSE_REPORT_STATS: "no"
+      SYNAPSE_REGISTRATION_SHARED_SECRET: ${REGISTRATION_SHARED_SECRET:-ziwei-gateway-dev-secret}
+    volumes:
+      - synapse-data:/data
+      - ./deploy/synapse-entrypoint.sh:/entrypoint.sh:ro
+    entrypoint: ["/entrypoint.sh"]
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8008/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks:
+      - ziwei-net
+
+  tianshu:
+    build:
+      context: ./tianshu
+      dockerfile: Containerfile
+    container_name: ziwei-tianshu
+    ports:
+      - "8082:8080"
+    environment:
+      # 验证统一使用 NAS Synapse；改回本机则设 MATRIX_HOMESERVER=http://synapse:8008、MATRIX_GATEWAY_USER=@gateway:matrix.local
+      - MATRIX_HOMESERVER=${MATRIX_HOMESERVER:-http://xyin.oicp.net:8008}
+      - MATRIX_GATEWAY_USER=${MATRIX_GATEWAY_USER:-@gateway:xyin.oicp.net}
+      - MATRIX_GATEWAY_TOKEN=${MATRIX_GATEWAY_TOKEN}
+      - REGISTRATION_SHARED_SECRET=${REGISTRATION_SHARED_SECRET:-ziwei-gateway-dev-secret}
+      - MATRIX_GATEWAY_TOKEN_FILE=/data/gateway_token
+      - FEISHU_APP_ID=${FEISHU_APP_ID}
+      - FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
+      - HEALTH_PORT=8080
+      - DITING_CHAIN_URL=http://diting:8080/chain
+      - DITING_INIT_PERMISSION_URL=http://diting:8080/init_permission
+      - DITING_APPROVE_CALLBACK_URL=${DITING_APPROVE_CALLBACK_URL:-}
+      - NATIVE_DEMO_INVITE_USER=${NATIVE_DEMO_INVITE_USER:-@hulk:xyin.oicp.net}
+      - DELIVERY_ROOM_ID=${DELIVERY_ROOM_ID:-}
+      - APPROVAL_REPLY_VIA_MATRIX=${APPROVAL_REPLY_VIA_MATRIX:-false}
+    env_file:
+      - .env
+    volumes:
+      - tianshu-data:/data
+    depends_on:
+      diting:
+        condition: service_healthy
+      synapse:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - ziwei-net
+
+volumes:
+  synapse-data:
+  diting-data:
+  tianshu-data:
+
+networks:
+  ziwei-net:
+    driver: bridge
