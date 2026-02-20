@@ -1,16 +1,27 @@
 """
 悟空智能体服务封装模块
+
+S015: 消息通道集成
+- 消息接收：从天枢接收消息
+- 消息发送：发送消息到天枢
+- 流式输出：实时推送 Agent 输出
 """
 
 import asyncio
 import logging
-from typing import Optional, Callable, Dict, Any, List
+from typing import Optional, Callable, Dict, Any, List, AsyncIterator
 from dataclasses import dataclass, field
 from enum import Enum
 
 from .client import WukongClient
 from .config import WukongConfig
 from .tools import ToolRegistry, get_registry
+from .message_channel import (
+    MessageChannel, 
+    TianshuMessage, 
+    MessageType,
+    MessageSource,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -38,26 +49,35 @@ class WukongAgent:
     悟空智能体服务封装
     
     提供统一的 Agent 服务接口，支持启动、停止、消息发送等功能。
+    S015: 集成消息通道，支持与天枢的消息互通。
     """
     
     def __init__(
         self,
         config: Optional[WukongConfig] = None,
         message_callback: Optional[Callable[[str], None]] = None,
+        tianshu_callback: Optional[Callable[[TianshuMessage], None]] = None,
     ):
         """
         初始化悟空 Agent
         
         Args:
             config: 悟空配置
-            message_callback: 消息回调函数
+            message_callback: 消息回调函数（接收消息内容）
+            tianshu_callback: 天枢消息回调（接收完整的 TianshuMessage）
         """
         self.config = config or WukongConfig()
         self._client = WukongClient(self.config)
         self._state = AgentState.IDLE
         self._message_callback = message_callback
+        self._tianshu_callback = tianshu_callback
         self._conversation_history: List[ConversationMessage] = []
         self._tool_registry = get_registry()
+        
+        # 消息通道（S015 新增）
+        self._message_channel: Optional[MessageChannel] = None
+        if self.config.enable_message_channel:
+            self._message_channel = MessageChannel(self.config)
         
     async def start(self) -> bool:
         """
@@ -80,6 +100,17 @@ class WukongAgent:
             # 设置消息回调
             if self._message_callback:
                 self._client.set_message_callback(self._message_callback)
+            
+            # S015: 初始化消息通道
+            if self._message_channel:
+                await self._message_channel.initialize(
+                    taibai_url=self.config.taibai_url,
+                    taibai_token=self.config.tianshu_token,
+                )
+                # 设置天枢消息回调
+                if self._tianshu_callback:
+                    self._message_channel.set_message_callback(self._tianshu_callback)
+                logger.info("MessageChannel initialized")
                 
             self._state = AgentState.RUNNING
             logger.info("Wukong Agent started successfully")
@@ -105,6 +136,10 @@ class WukongAgent:
             self._state = AgentState.STOPPING
             logger.info("Stopping Wukong Agent...")
             
+            # 关闭消息通道（S015）
+            if self._message_channel:
+                await self._message_channel.close()
+                
             # 关闭客户端
             await self._client.close()
             
@@ -168,6 +203,132 @@ class WukongAgent:
         self._message_callback = callback
         if self._client.is_initialized:
             self._client.set_message_callback(callback)
+            
+    def on_tianshu_message(self, callback: Callable[[TianshuMessage], None]) -> None:
+        """
+        设置天枢消息回调（S015）
+        
+        Args:
+            callback: 回调函数，接收 TianshuMessage
+        """
+        self._tianshu_callback = callback
+        if self._message_channel and self._message_channel.is_initialized:
+            self._message_channel.set_message_callback(callback)
+            
+    # ==================== S015: 消息通道方法 ====================
+    
+    async def handle_tianshu_message(self, raw_message: Dict[str, Any]) -> None:
+        """
+        处理收到的天枢消息（S015）
+        
+        Args:
+            raw_message: 原始天枢消息 (Matrix event)
+        """
+        if not self._message_channel:
+            logger.warning("MessageChannel not initialized")
+            return
+            
+        await self._message_channel.handle_tianshu_message(raw_message)
+        
+    async def send_to_tianshu(
+        self,
+        room_id: str,
+        content: str,
+        message_type: MessageType = MessageType.TEXT,
+    ) -> Optional[str]:
+        """
+        发送消息到天枢（S015）
+        
+        Args:
+            room_id: 目标房间 ID
+            content: 消息内容
+            message_type: 消息类型
+            
+        Returns:
+            发送的消息 ID，失败返回 None
+        """
+        if not self._message_channel:
+            logger.warning("MessageChannel not initialized")
+            return None
+            
+        return await self._message_channel.send_message(
+            room_id=room_id,
+            content=content,
+            message_type=message_type,
+        )
+        
+    async def send_streaming(
+        self,
+        room_id: str,
+        content: str,
+    ) -> str:
+        """
+        发送流式消息（S015）
+        
+        实时推送 Agent 输出到天枢
+        
+        Args:
+            room_id: 目标房间 ID
+            content: 消息内容
+            
+        Returns:
+            完整消息内容
+        """
+        if not self._message_channel:
+            logger.warning("MessageChannel not initialized")
+            return content
+            
+        return await self._message_channel.send_streaming_message(
+            room_id=room_id,
+            content=content,
+        )
+        
+    async def process_tianshu_message(
+        self,
+        raw_message: Dict[str, Any],
+    ) -> str:
+        """
+        处理收到的天枢消息并返回回复（S015）
+        
+        完整流程：
+        1. 接收天枢消息
+        2. 转换为 Agent 格式
+        3. 调用 Agent 处理
+        4. 返回回复
+        
+        Args:
+            raw_message: 原始天枢消息
+            
+        Returns:
+            Agent 回复内容
+        """
+        # 解析消息
+        tianshu_msg = self._message_channel.handle_tianshu_message(raw_message) if self._message_channel else None
+        
+        # 发送到 Agent
+        content = tianshu_msg.content if tianshu_msg else raw_message.get("content", {}).get("body", "")
+        
+        # 获取房间 ID
+        room_id = raw_message.get("room_id", "")
+        
+        # 发送消息到 Agent
+        response = await self.send_message(content)
+        
+        # 发送回复到天枢
+        if room_id and self._message_channel:
+            await self._message_channel.send_message(
+                room_id=room_id,
+                content=response,
+            )
+            
+        return response
+        
+    @property
+    def message_channel(self) -> Optional[MessageChannel]:
+        """获取消息通道（S015）"""
+        return self._message_channel
+        
+    # ==================== 原有方法 ====================
             
     def get_history(self) -> List[ConversationMessage]:
         """获取对话历史"""

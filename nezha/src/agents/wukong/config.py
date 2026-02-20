@@ -3,7 +3,7 @@
 """
 
 import os
-from typing import List, Optional
+from typing import List, Optional, Callable
 from dataclasses import dataclass, field
 
 
@@ -14,6 +14,11 @@ class WukongConfig:
     # API 配置
     api_key: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
     base_url: Optional[str] = field(default_factory=lambda: os.getenv("ANTHROPIC_BASE_URL", None))
+    
+    # 天枢/太白配置
+    tianshu_url: str = field(default_factory=lambda: os.getenv("TIANSHU_URL", "http://localhost:8082"))
+    tianshu_token: Optional[str] = field(default_factory=lambda: os.getenv("TIANSHU_TOKEN", None))
+    taibai_url: str = field(default_factory=lambda: os.getenv("TAIBAI_URL", "http://localhost:8081"))
     
     # 模型配置
     model: str = "claude-sonnet-4-20250514"
@@ -40,6 +45,10 @@ class WukongConfig:
     
     # 流式输出
     stream: bool = True
+    
+    # 消息通道配置
+    enable_message_channel: bool = True
+    stream_output: bool = True  # 是否启用流式输出
 
 
 # 默认配置实例
