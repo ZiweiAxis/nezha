@@ -45,7 +45,7 @@
 | S060 | 移除悟空谛听客户端代码 | ✅ 已完成 | 2 |
 | S061 | 移除 agent.py 中的 DitingClient 调用 | ✅ 已完成 | 1 |
 | S062 | 验证哪吒沙箱模式可用 | ✅ 已完成 | 3 |
-| S063 | 验证策略拦截正常工作 | ⏳ 待处理 | 2 |
+| S063 | 验证策略拦截正常工作 | 🚧 进行中 | 2 |
 
 ---
 
@@ -131,12 +131,26 @@
 
 ### 任务
 
-- [ ] 通过哪吒启动悟空
-- [ ] 测试策略拦截功能
+- [x] 实现 configureDitingHook 方法
+- [x] 测试策略 API (/auth/exec)
+- [ ] 端到端测试
+
+### 当前状态
+
+**configureDitingHook**: ✅ 已实现
+- 检查谛听服务可用性
+- 配置环境变量: DITING_ENABLED, DITING_URL, DITING_SUBJECT
+- 配置 HTTP_PROXY 使请求经过谛听
+
+**策略 API 测试**: ✅ 通过
+- `/auth/exec` 返回正确决策
+- 规则匹配正常工作
 
 ### 验收标准
 
-- [ ] 策略拦截正常工作
+- [x] configureDitingHook 配置正确
+- [x] 策略 API 工作正常
+- [ ] 端到端拦截测试
 
 ---
 
