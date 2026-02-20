@@ -1,13 +1,29 @@
-# 测试用策略规则：所有 exec:run 需要审批
+# 测试用策略规则
 rules:
-  - id: review_all_exec
-    action: "exec:run"
+  # 允许天气查询
+  - id: allow_weather
+    action: "skill:weather"
+    resource: "*"
+    decision: allow
+    reason: 天气查询直接放行
+
+  # 其他 skill 需要审批
+  - id: review_other_skill
+    action: "skill:*"
     resource: "*"
     decision: review
-    reason: 测试环境需要审批
+    reason: 其他技能需要审批
 
+  # 允许读取操作
   - id: allow_read
     action: GET
     resource: "*"
     decision: allow
     reason: 只读操作放行
+
+  # 拒绝危险操作
+  - id: deny_dangerous
+    action: "exec:run"
+    resource: "rm -rf"
+    decision: deny
+    reason: 危险命令拒绝
