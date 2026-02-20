@@ -7,7 +7,7 @@
 | Epic ID | E003 |
 | 名称 | 獬豸改造 |
 | 描述 | 使用太白 SDK 替代直接调用天枢 |
-| 状态 | 🔶 进行中 |
+| 状态 | ✅ 已完成 |
 | 优先级 | P1 |
 | 依赖方 | E001 (太白 SDK) |
 
@@ -43,10 +43,10 @@ taibaiClient.SendApprovalRequest(...)
 
 ## 验收标准 (Acceptance Criteria)
 
-- [ ] 移除所有直接 HTTP 调用天枢的代码
-- [ ] 集成太白 Go SDK
-- [ ] 审批消息通过太白 SDK 发送
-- [ ] 测试验证功能正常
+- [x] 移除所有直接 HTTP 调用天枢的代码
+- [x] 集成太白 Go SDK
+- [x] 审批消息通过太白 SDK 发送
+- [x] 测试验证功能正常
 
 ## Definition of Done
 

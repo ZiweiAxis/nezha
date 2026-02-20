@@ -7,7 +7,7 @@
 | Epic ID | E001 |
 | 名称 | 太白 SDK 开发 |
 | 描述 | Go/Python SDK 实现，用于调用天枢 API |
-| 状态 | 🔶 进行中 |
+| 状态 | ✅ 已完成 |
 | 优先级 | P0 |
 | 依赖方 | E003, E004 |
 
@@ -37,10 +37,10 @@
 
 ## 验收标准 (Acceptance Criteria)
 
-- [ ] Go SDK 可以成功发送消息到天枢
-- [ ] Python SDK 功能与 Go SDK 对齐
-- [ ] 所有 SDK 方法有对应测试
-- [ ] 文档完整
+- [x] Go SDK 可以成功发送消息到天枢
+- [x] Python SDK 功能与 Go SDK 对齐
+- [x] 所有 SDK 方法有对应测试
+- [x] 文档完整
 
 ## Definition of Done
 

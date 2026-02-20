@@ -7,7 +7,7 @@
 | Epic ID | E002 |
 | 名称 | 谛听 Seccomp |
 | 描述 | Seccomp 拦截实现，策略执行点 |
-| 状态 | 🔶 进行中 |
+| 状态 | ✅ 已完成 |
 | 优先级 | P1 |
 | 依赖方 | E004 |
 
@@ -37,10 +37,10 @@
 
 ## 验收标准 (Acceptance Criteria)
 
-- [ ] Seccomp 过滤器正确拦截指定 syscall
-- [ ] 策略缓存在内存中正常工作
-- [ ] 与獬豸 HTTP 通信正常
-- [ ] 审批回调机制可用
+- [x] Seccomp 过滤器正确拦截指定 syscall
+- [x] 策略缓存在内存中正常工作
+- [x] 与獬豸 HTTP 通信正常
+- [x] 审批回调机制可用
 
 ## Definition of Done
 
