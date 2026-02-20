@@ -1,323 +1,189 @@
-# 紫微智能体治理基础设施 (Ziwei)
+# 悟空 (Wukong)
 
-欢迎来到紫微生态！这是一套完整的企业级 AI 智能体治理基础设施。
+紫微智能体治理平台的 Agent 生命周期管理器。
 
-## 🚀 快速开始
+## 功能特性
 
-### 第一步：了解架构 (5 分钟)
-阅读 **[ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md)** 了解整体架构和三个核心组件。
+- **身份管理** - 向天枢注册 Agent 身份，支持分级审批
+- **生命周期管理** - 启动/停止/重启 Agent，支持本地/Docker/gVisor 沙箱
+- **状态管理** - 实时同步 Agent 状态到天枢
+- **适配器系统** - 支持不同类型的 Agent（Claude、Cursor 等）
+- **零侵入治理** - 通过 diting-hook 自动接入紫微治理体系
 
-### 第二步：掌握快速参考 (10 分钟)
-阅读 **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** 掌握常用命令和配置。
+## 快速开始
 
-### 第三步：查询详细信息 (按需)
-使用 **[INDEX.md](./INDEX.md)** 快速查询文件位置、代码位置和学习路径。
+### 安装
 
----
-
-## 📚 核心文档
-
-| 文档 | 大小 | 用途 |
-|------|------|------|
-| [ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md) | 18KB | 完整生态总结，包含架构、组件、工作流程、数据模型 |
-| [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) | 9.2KB | 快速参考指南，包含常用命令、配置、API、故障排查 |
-| [INDEX.md](./INDEX.md) | 15KB | 完整索引，包含文件映射、代码位置、学习路径 |
-
----
-
-## 🏗️ 三大核心组件
-
-### 1️⃣ Tianshu (天枢) - 任务分发中心
-- **位置**: `tianshu/`
-- **语言**: Python
-- **状态**: 规划中
-- **功能**: 任务队列、身份管理、权限策略、审计字段注入
-
-### 2️⃣ Taibai (太白) - 适配器框架
-- **位置**: `taibai/`
-- **语言**: Python
-- **状态**: MVP (可用)
-- **功能**: 适配器基类、SDK、协议定义、注册表
-- **关键类**: `Agent`, `CLIAdapterBase`, `PluginAdapterBase`, `SDKAdapterBase`
-
-### 3️⃣ Diting (谛听) - 治理网关
-- **位置**: `diting/`
-- **语言**: Go
-- **状态**: MVP (可用)
-- **功能**: HTTP 代理、风险评估、策略决策、人工审批、审计日志
-- **架构**: 5 层设计 (L0-L4)
-
----
-
-## 🎯 核心特性
-
-✅ **零信任架构** - 所有请求都需要身份验证 (L0)
-✅ **人机协同** - AI 提供建议，人类做最终决策 (L3)
-✅ **完整审计** - 全链路追踪，决策理由记录 (L4)
-✅ **智能降级** - LLM 不可用自动降级到规则引擎
-✅ **易于扩展** - 灵活的适配器框架支持多种 Agent
-
----
-
-## 📊 Diting 5 层架构
-
-```
-L0: 身份验证 (X-Agent-Token / Authorization)
-    ↓
-L1: 风险评估 (规则引擎 + LLM 分析)
-    ↓
-L2: 策略决策 (Allow / Deny / Review)
-    ↓
-L3: 人机协同 (CHEQ 确认引擎 + 飞书审批)
-    ↓
-L4: 审计追溯 (JSONL / PostgreSQL / ClickHouse)
-```
-
----
-
-## 🔄 请求处理流程
-
-```
-Agent 发送请求
-    ↓ (HTTP + X-Agent-Token)
-Diting L0 身份验证
-    ↓ (token 有效)
-Diting L1 风险评估
-    ↓ (规则引擎 + LLM)
-Diting L2 策略决策
-    ↓ (Allow/Deny/Review)
-    ├─ Allow → 转发请求 + 审计
-    ├─ Deny → 拒绝请求 + 审计
-    └─ Review → 创建 CHEQ + 飞书投递 + 等待审批 + 审计
-```
-
----
-
-## 🚀 快速启动
-
-### 启动 Diting 网关
 ```bash
-cd diting/cmd/diting
-go build -o bin/diting ./cmd/diting_allinone
-./bin/diting
+npm install -g @ziwei/wukong
 ```
 
-### 发送测试请求
+### 启动 Claude Agent
+
 ```bash
-curl -H "X-Agent-Token: key1" http://localhost:8080/api/users
+# 本地模式启动
+wukong claude --name my-claude --mode local
+
+# Docker 沙箱模式
+wukong claude --name my-claude --mode sandbox
+
+# gVisor 深度沙箱模式
+wukong claude --name my-claude --mode deep-sandbox
 ```
 
-### 查看审计日志
+### 管理 Agent
+
 ```bash
-tail -f diting/data/audit.jsonl
+# 列出所有 Agent
+wukong list
+
+# 查看 Agent 状态
+wukong status my-claude
+
+# 停止 Agent
+wukong stop my-claude
+
+# 重启 Agent
+wukong restart my-claude
+
+# 查看日志
+wukong logs my-claude -n 100
 ```
 
----
+### 身份管理
 
-## 📖 学习路径
-
-### 初级 (了解基础)
-1. 阅读 [ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md)
-2. 阅读 [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)
-3. 查看 `diting/docs/QUICKSTART.md`
-
-### 中级 (深入理解)
-1. 阅读 `diting/docs/ARCHITECTURE_FULL.md`
-2. 阅读 `diting/docs/PROJECT_SUMMARY.md`
-3. 查看 `diting/cmd/diting/internal/proxy/pipeline.go`
-4. 查看 `diting/cmd/diting/internal/cheq/engine.go`
-
-### 高级 (开发扩展)
-1. 阅读 `taibai/docs/adapter-development-guide.md`
-2. 查看 `taibai/adapters/claude_code_cli/adapter.py`
-3. 查看 `diting/cmd/diting/config.yaml`
-4. 查看 `diting/cmd/diting/policy_rules.example.yaml`
-
-### 专家 (贡献代码)
-1. 查看 `diting/docs/STRUCTURE.md`
-2. 查看 `diting/README.md`
-3. 查看 `diting/cmd/diting/internal/models/`
-4. 查看 `diting/cmd/diting/internal/audit/store.go`
-
----
-
-## 🎯 常见任务
-
-### 添加新的审批人
-编辑 `diting/cmd/diting/config.yaml`:
-```yaml
-cheq:
-  approval_rules:
-    - path_prefix: "/admin"
-      approval_user_ids: ["user1", "user2", "user3"]
-```
-
-### 修改审批超时
-编辑 `diting/cmd/diting/config.yaml`:
-```yaml
-cheq:
-  timeout_seconds: 300  # 改为 5 分钟
-```
-
-### 添加新的策略规则
-编辑 `diting/cmd/diting/policy_rules.yaml`:
-```yaml
-rules:
-  - id: review_api_call
-    action: "api_call"
-    resource: "/api/sensitive"
-    decision: review
-    reason: 敏感 API 需人工确认
-```
-
-### 启用飞书长连接
-编辑 `diting/cmd/diting/config.yaml`:
-```yaml
-delivery:
-  feishu:
-    use_long_connection: true
-```
-
----
-
-## 🔍 故障排查
-
-### 请求返回 401
-**原因**: 身份验证失败
-**解决**: 检查 `X-Agent-Token` 或 `Authorization` 头，确认 token 在 `allowed_api_keys` 列表中
-
-### 请求返回 403
-**原因**: 策略拒绝或审批超时
-**解决**: 检查 `policy_rules.yaml` 中的规则，或增加 `cheq.timeout_seconds`
-
-### 飞书审批消息未收到
-**原因**: 飞书配置错误或投递失败
-**解决**: 检查 `app_id` 和 `app_secret`，确认 `approval_user_ids` 有效
-
-### 审计日志为空
-**原因**: 审计存储配置错误
-**解决**: 检查 `audit.path` 目录是否存在且有写权限
-
----
-
-## 📞 获取帮助
-
-### 查看日志
 ```bash
-tail -f diting/logs/diting.log
-tail -f diting/data/audit.jsonl
+# 注册新身份
+wukong identity --register my-agent --type claude
+
+# 列出所有身份
+wukong identity --list
 ```
 
-### 查看配置
+## 架构设计
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                        悟空 CLI                          │
+└─────────────────────────────────────────────────────────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ 身份管理器    │  │ 状态管理器    │  │ Agent管理器   │
+└──────────────┘  └──────────────┘  └──────────────┘
+        │                  │                  │
+        └──────────────────┼──────────────────┘
+                           │
+                           ▼
+                  ┌──────────────┐
+                  │  天枢客户端   │
+                  └──────────────┘
+                           │
+                           ▼
+                  ┌──────────────┐
+                  │   天枢 API    │
+                  └──────────────┘
+```
+
+## 运行模式
+
+### 本地模式 (local)
+- 直接在本地环境运行
+- 无隔离，性能最佳
+- 适合开发和测试
+
+### Docker 沙箱 (sandbox)
+- 运行在 Docker 容器中
+- 基础隔离，平衡性能和安全
+- 适合生产环境
+
+### gVisor 深度沙箱 (deep-sandbox)
+- 运行在 gVisor 容器中
+- 深度隔离，安全性最高
+- 适合高风险场景
+
+## 开发
+
+### 安装依赖
+
 ```bash
-cat diting/cmd/diting/config.yaml
-cat diting/cmd/diting/policy_rules.yaml
+npm install
 ```
 
-### 查询审计日志
+### 开发模式
+
 ```bash
-grep "trace_id" diting/data/audit.jsonl | jq .
+npm run dev -- claude --name test
 ```
 
-### 查看文档
-- 生态总结: [ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md)
-- 快速参考: [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)
-- 完整索引: [INDEX.md](./INDEX.md)
-- Diting 项目总结: `diting/docs/PROJECT_SUMMARY.md`
-- Diting 完整架构: `diting/docs/ARCHITECTURE_FULL.md`
-- Taibai 适配器开发: `taibai/docs/adapter-development-guide.md`
+### 构建
 
----
-
-## 🎉 总结
-
-紫微是一套完整的、生产就绪的 AI 智能体治理基础设施：
-
-- **Tianshu**: 任务分发中心 (规划中)
-- **Taibai**: 适配器框架 (MVP)
-- **Diting**: 治理网关 (MVP)
-
-核心特性：
-- ✅ 零信任架构
-- ✅ 人机协同
-- ✅ 完整审计
-- ✅ 智能降级
-- ✅ 易于扩展
-
-适用场景：
-- AI 智能体安全治理
-- 企业级审计合规
-- 风险决策支持
-- 操作审批流程
-
----
-
-## 📚 文档结构
-
-```
-ziwei/
-├── README.md                    # 本文件 - 项目入口
-├── ECOSYSTEM_OVERVIEW.md        # 完整生态总结
-├── QUICK_REFERENCE.md           # 快速参考指南
-├── INDEX.md                     # 完整索引
-├── _bmad/                       # BMAD 需求管理
-│   ├── README.md                # BMAD 索引
-│   ├── README_epics.md          # Epic 列表
-│   ├── README_stories.md        # Story 列表
-│   └── content/
-│       └── epics/               # Epic 详情
-│           ├── e001_taibai_sdk.md
-│           ├── e002_diting_seccomp.md
-│           ├── e003_xiezhi_taibai.md
-│           └── e004_nezha_integration.md
-├── tianshu/                     # 天枢 - 任务分发中心
-├── taibai/                      # 太白 - 适配器框架
-└── diting/                      # 谛听 - 治理网关
-    ├── README.md
-    ├── README_CN.md
-    ├── cmd/diting/
-    │   ├── main.go
-    │   ├── config.yaml
-    │   ├── policy_rules.example.yaml
-    │   └── internal/
-    │       ├── proxy/
-    │       ├── policy/
-    │       ├── cheq/
-    │       ├── audit/
-    │       ├── delivery/
-    │       ├── models/
-    │       └── config/
-    └── docs/
-        ├── PROJECT_SUMMARY.md
-        ├── ARCHITECTURE_FULL.md
-        ├── STRUCTURE.md
-        ├── QUICKSTART.md
-        ├── INSTALL.md
-        ├── TEST.md
-        └── DEMO.md
+```bash
+npm run build
 ```
 
----
+### 测试
 
-## 🔗 快速链接
+```bash
+# 运行测试
+npm test
 
-- **生态总结**: [ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md) - 了解整体架构
-- **快速参考**: [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) - 常用命令和配置
-- **完整索引**: [INDEX.md](./INDEX.md) - 文件位置和代码位置
-- **Diting 项目**: [diting/README.md](./diting/README.md) - Diting 项目说明
-- **Taibai 适配器**: [taibai/docs/adapter-development-guide.md](./taibai/docs/adapter-development-guide.md) - 适配器开发指南
+# 监听模式
+npm run test:watch
 
----
+# 覆盖率
+npm run test:coverage
+```
 
-## 💡 建议
+## 配置
 
-1. **第一次使用**: 从 [ECOSYSTEM_OVERVIEW.md](./ECOSYSTEM_OVERVIEW.md) 开始
-2. **快速查询**: 使用 [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)
-3. **深入学习**: 按照 [INDEX.md](./INDEX.md) 的学习路径
-4. **遇到问题**: 查看 [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) 的故障排查部分
+创建 `.env` 文件：
 
----
+```bash
+cp .env.example .env
+```
 
-祝你使用愉快！🎉
+配置项：
 
-如有问题，请查看相关文档或联系技术支持。
+- `TIANSHU_API_URL` - 天枢 API 地址
+- `TIANSHU_API_KEY` - 天枢 API 密钥
+- `WUKONG_DATA_DIR` - 数据目录（默认 ~/.wukong）
+- `LOG_LEVEL` - 日志级别
+
+## 扩展适配器
+
+实现 `IAgentAdapter` 接口来支持新的 Agent 类型：
+
+```typescript
+import { IAgentAdapter, AgentConfig, AgentInstance } from '@ziwei/wukong';
+
+export class MyAdapter implements IAgentAdapter {
+  readonly name = 'my-agent';
+
+  async start(config: AgentConfig): Promise<AgentInstance> {
+    // 实现启动逻辑
+  }
+
+  async stop(instance: AgentInstance): Promise<void> {
+    // 实现停止逻辑
+  }
+
+  async restart(instance: AgentInstance): Promise<AgentInstance> {
+    // 实现重启逻辑
+  }
+
+  async checkStatus(instance: AgentInstance): Promise<boolean> {
+    // 实现状态检查
+  }
+
+  async configureDitingHook(instance: AgentInstance): Promise<void> {
+    // 配置 diting-hook
+  }
+}
+```
+
+## 许可证
+
+MIT
