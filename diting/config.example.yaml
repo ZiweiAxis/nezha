@@ -1,0 +1,85 @@
+# Diting 配置模板（复制为 config.yaml 并配合 .env 使用）
+# 敏感项与飞书等由 .env 的 DITING_* 覆盖，不要写入本文件
+
+proxy:
+  listen_addr: ":8080"
+  upstream: "http://localhost:8081"
+  # L0 身份：空表示不强制；配置后仅允许列表中的 key（请求头 X-Agent-Token 或 Authorization，支持 Bearer <key>）
+  allowed_api_keys: []
+
+policy:
+  rules_path: "policy_rules.example.yaml"
+
+cheq:
+  timeout_seconds: 120
+  # 超时前多少秒发飞书提醒；0 或未配置表示 60 秒
+  reminder_seconds_before_timeout: 60
+  persistence_path: "./data/cheq"
+  # I-009 按 path/risk_level 配置不同超时与审批人；先匹配先生效；无匹配用上方 timeout_seconds 与 delivery.feishu 默认
+  # approval_rules:
+  #   - path_prefix: "/admin"
+  #     risk_level: "high"
+  #     timeout_seconds: 600
+  #     approval_user_ids: ["user_high_1", "user_high_2"]
+  #     approval_policy: "all"
+  #   - path_prefix: "/api"
+  #     timeout_seconds: 60
+  #     # approval_user_ids 不写则用 delivery.feishu 默认
+  #     # approval_policy 不写则用 delivery.feishu 默认
+
+delivery:
+  # 天枢投递：enabled 且 base_url 配置时，CHEQ 创建后调用天枢 POST /api/v1/delivery/approval-request，审批发往天枢 DELIVERY_ROOM_ID（Matrix 房间）。见 deploy/危险操作与Matrix审批验证.md
+  tianshu:
+    enabled: false
+    base_url: "http://tianshu:8082"
+    gateway_base_url: "http://diting:8080"
+    approval_policy: "any"
+  feishu:
+    app_id: ""
+    enabled: true
+    approval_user_id: ""
+    # I-008 多审批人：列表与 approval_user_id 二选一（或 .env DITING_FEISHU_APPROVAL_USER_ID）
+    # approval_user_ids: []
+    # approval_policy: "any"  # any=任一通过即放行，all=全部通过才放行
+    receive_id_type: ""
+    approval_timeout_minutes: 5
+    use_message_reply: true
+    poll_interval_seconds: 2
+    chat_id: ""
+    gateway_base_url: "http://localhost:8080"
+    use_card_delivery: true
+    use_long_connection: true
+    # 飞书发送失败时的重试：最大次数与首次退避秒数（之后指数增加）；0 表示默认 3 次、1 秒
+    retry_max_attempts: 3
+    retry_initial_backoff_seconds: 1
+
+audit:
+  path: "./data/audit.jsonl"
+  redact: []
+
+ownership:
+  static_map: {}
+
+# 链子模块（I-017）：DID 与存证 API；enabled 为 true 时挂载 /chain/*
+chain:
+  enabled: false
+  storage_path: "./data/chain"
+  merkle_batch_size: 0
+  # 审计 Trace 落库后按批上链（Story 10.6）；需 enabled: true 时生效
+  audit_batch_enabled: false
+  audit_batch_size: 50
+  audit_batch_interval_sec: 30
+
+# 以下供 main_feishu / main 等入口使用（All-in-One 可忽略）；敏感项由 .env 覆盖
+llm:
+  provider: anthropic
+  base_url: ""
+  api_key: ""
+  model: ""
+  max_tokens: 1024
+  temperature: 0.7
+risk:
+  dangerous_methods: ["DELETE", "PUT", "PATCH", "POST"]
+  dangerous_paths: ["/delete", "/remove", "/drop", "/destroy", "/clear", "/admin", "/production"]
+  auto_approve_methods: ["GET", "HEAD", "OPTIONS"]
+  safe_domains: ["api.github.com", "httpbin.org"]
