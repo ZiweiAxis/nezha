@@ -4,7 +4,7 @@
 !/tianshu/_bmad/**
 !/tianshu/_bmad-output/
 !/tianshu/_bmad-output/**
-/diting/*
+# /diting/*  # 注释：新独立项目
 !/diting/_bmad/
 !/diting/_bmad/**
 !/diting/_bmad-output/
@@ -24,3 +24,14 @@
 *.log
 __pycache__/
 *.pyc
+nezha/node_modules/
+# 允许跟踪 diting 主要代码
+!/diting/*.md
+!/diting/cmd/
+!/diting/pkg/
+!/diting/internal/
+!/diting/proto/
+!/diting/scripts/
+!/diting/docs/
+!/diting/Makefile
+!/diting/config

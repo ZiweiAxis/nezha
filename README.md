@@ -260,6 +260,16 @@ ziwei/
 ├── ECOSYSTEM_OVERVIEW.md        # 完整生态总结
 ├── QUICK_REFERENCE.md           # 快速参考指南
 ├── INDEX.md                     # 完整索引
+├── _bmad/                       # BMAD 需求管理
+│   ├── README.md                # BMAD 索引
+│   ├── README_epics.md          # Epic 列表
+│   ├── README_stories.md        # Story 列表
+│   └── content/
+│       └── epics/               # Epic 详情
+│           ├── e001_taibai_sdk.md
+│           ├── e002_diting_seccomp.md
+│           ├── e003_xiezhi_taibai.md
+│           └── e004_nezha_integration.md
 ├── tianshu/                     # 天枢 - 任务分发中心
 ├── taibai/                      # 太白 - 适配器框架
 └── diting/                      # 谛听 - 治理网关

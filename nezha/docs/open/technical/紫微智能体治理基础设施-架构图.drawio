@@ -1,0 +1,166 @@
+<mxfile host="app.diagrams.net" modified="2026-02-13T00:00:00.000Z" agent="Ziwei" version="22.1.0" etag="arch" type="device">
+  <diagram id="ziwei-arch" name="总体架构">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 接入层 -->
+        <mxCell id="g-access" value="接入层" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="1320" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="a1" value="智能体 A" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="g-access" vertex="1">
+          <mxGeometry x="80" y="30" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="a2" value="智能体 B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="g-access" vertex="1">
+          <mxGeometry x="220" y="30" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="a3" value="智能体 N" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="g-access" vertex="1">
+          <mxGeometry x="360" y="30" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 太白 -->
+        <mxCell id="g-taibai" value="太白 · 开放接入规范" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="180" width="1320" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="sdk" value="多语言 SDK" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="g-taibai" vertex="1">
+          <mxGeometry x="80" y="30" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="adapter" value="预置适配器&#xa;OpenClaw / Dify / Co-Claw" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="g-taibai" vertex="1">
+          <mxGeometry x="240" y="25" width="180" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- 平台 紫微治理集群 -->
+        <mxCell id="g-platform" value="紫微治理集群 · 平台内部" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="320" width="1320" height="380" as="geometry"/>
+        </mxCell>
+
+        <!-- 天枢 -->
+        <mxCell id="g-tianshu" value="天枢 · 通信与身份底座" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="g-platform" vertex="1">
+          <mxGeometry x="40" y="40" width="400" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="matrix" value="Matrix 联邦协议&#xa;端到端加密" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="g-tianshu" vertex="1">
+          <mxGeometry x="20" y="40" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="did" value="区块链 DID&#xa;环境指纹绑定" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="g-tianshu" vertex="1">
+          <mxGeometry x="150" y="40" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="im" value="企业 IM 适配器&#xa;飞书 / 钉钉 / 企微" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="g-tianshu" vertex="1">
+          <mxGeometry x="280" y="40" width="100" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- 谛听 -->
+        <mxCell id="g-diting" value="谛听 · 策略与审计中枢" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="g-platform" vertex="1">
+          <mxGeometry x="480" y="40" width="860" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="cedar" value="Cedar 策略引擎" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="g-diting" vertex="1">
+          <mxGeometry x="20" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="approval" value="分级审批流" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="g-diting" vertex="1">
+          <mxGeometry x="160" y="40" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="trace" value="全行为 Trace" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="g-diting" vertex="1">
+          <mxGeometry x="280" y="40" width="100" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="audit" value="审计存证" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="g-diting" vertex="1">
+          <mxGeometry x="400" y="40" width="90" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="chain" value="私有链 · 谛听管理&#xa;DID 注册 · 指纹上链" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;" parent="g-diting" vertex="1">
+          <mxGeometry x="520" y="100" width="140" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- 外部依赖 -->
+        <mxCell id="g-external" value="外部依赖" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="740" width="1320" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="feishu" value="飞书" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="g-external" vertex="1">
+          <mxGeometry x="80" y="25" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="ding" value="钉钉" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="g-external" vertex="1">
+          <mxGeometry x="200" y="25" width="80" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="wxwork" value="企业微信" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="g-external" vertex="1">
+          <mxGeometry x="320" y="25" width="90" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 连线：接入层 -> 天枢 Matrix -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="a2" target="matrix" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1l" value="注册/心跳/身份" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e1" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- 天枢内部 DID <-> 链 -->
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="did" target="chain" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- Matrix -> IM -->
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="matrix" target="im" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3l" value="审批触达" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e3" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- IM -> 外部 -->
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" parent="1" source="im" target="feishu" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="im" target="ding" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="im" target="wxwork" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 外部 -> IM 审批回调 -->
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="feishu" target="im" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7l" value="审批回调" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e7" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- Matrix <-> Cedar -->
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="matrix" target="cedar" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8l" value="注册事件/审批决策" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e8" vertex="1" connectable="0">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- Cedar -> Approval -> IM -->
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="cedar" target="approval" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="approval" target="im" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <!-- 智能体 -> Trace -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="a2" target="trace" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11l" value="m.agent.action" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e11" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- Trace -> Audit -> Chain -->
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="trace" target="audit" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="audit" target="chain" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13l" value="Merkle 根哈希" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e13" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- Audit 存证回执 -> 智能体 -->
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="audit" target="a2" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14l" value="存证回执" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="e14" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="1" relative="1" as="geometry"><mxPoint as="offset"/></mxGeometry>
+        </mxCell>
+        <!-- 太白 SDK -> 智能体 -->
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="sdk" target="a2" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
