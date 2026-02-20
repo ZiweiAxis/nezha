@@ -78,6 +78,30 @@ export interface AgentInstance {
   startedAt?: Date;
   stoppedAt?: Date;
   restartCount: number;
+  /** 沙箱配置 */
+  sandboxConfig?: SandboxConfig;
+  /** 谛听 Hook 配置 */
+  ditingConfig?: DitingConfig;
+}
+
+/**
+ * 沙箱配置
+ */
+export interface SandboxConfig {
+  containerName: string;
+  workDir: string;
+  imageName: string;
+  network?: string;
+}
+
+/**
+ * 谛听 Hook 配置
+ */
+export interface DitingConfig {
+  enabled: boolean;
+  url: string;
+  subject: string;
+  env: Record<string, string>;
 }
 
 /**
