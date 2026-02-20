@@ -34,15 +34,22 @@ import Layout from '../layouts/Layout.astro';
           <div class="component-card">
             <div class="component-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">✦</div>
             <h3>天枢</h3>
-            <p>消息枢纽</p>
+            <p>消息中枢 (PIP)</p>
             <span>统一的消息路由和分发中心，支持多协议接入，实现 Agent 间的高效通信。</span>
           </div>
           
           <div class="component-card">
-            <div class="component-icon" style="background: linear-gradient(135deg, #10b981, #059669);">⚡</div>
-            <h3>谛听</h3>
-            <p>策略服务</p>
-            <span>策略引擎 + 决策引擎 + 审批模块 + 审计存储 + 消息投递，为悟空提供全方位的策略决策支持。</span>
+            <div class="component-icon" style="background: linear-gradient(135deg, #10b981, #059669);">⚖️</div>
+            <h3>獬豸</h3>
+            <p>策略服务 (PDP + PAP)</p>
+            <span>策略决策点 + 策略管理点，提供策略配置、决策评估和审批流程。</span>
+          </div>
+          
+          <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">🔱</div>
+            <h3>哪吒</h3>
+            <p>Agent 管理器</p>
+            <span>多智能体生命周期管理，Agent 注册、调度、监控和协作编排。</span>
           </div>
           
           <div class="component-card">
@@ -53,10 +60,89 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           <div class="component-card">
+            <div class="component-icon" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">👂</div>
+            <h3>谛听</h3>
+            <p>独立 PEP 子项目</p>
+            <span>独立的策略执行点子项目，提供完整的策略拦截、审计日志和安全控制能力。</span>
+          </div>
+          
+          <div class="component-card">
             <div class="component-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">💻</div>
             <h3>太白</h3>
             <p>Python SDK</p>
             <span>简洁易用的 Python 开发套件，助您快速集成紫微平台能力到应用中。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zero Trust Section -->
+      <div class="about-section">
+        <div class="section-icon">🔐</div>
+        <h2>零信任安全架构</h2>
+        <p>
+          紫微平台基于零信任安全架构设计，遵循「永不信任，始终验证」的核心原则，
+          为多智能体系统提供企业级的安全保障。
+        </p>
+        
+        <div class="zt-principles">
+          <div class="zt-principle">
+            <div class="principle-icon">🔐</div>
+            <div class="principle-content">
+              <h3>永不信任，始终验证</h3>
+              <p>每一次请求都需要经过身份验证和授权检查，无论来自内部还是外部网络。</p>
+            </div>
+          </div>
+          <div class="zt-principle">
+            <div class="principle-icon">🎯</div>
+            <div class="principle-content">
+              <h3>最小权限原则</h3>
+              <p>Agent 仅获得完成任务所需的最小权限，有效限制潜在的安全风险。</p>
+            </div>
+          </div>
+          <div class="zt-principle">
+            <div class="principle-icon">🔄</div>
+            <div class="principle-content">
+              <h3>持续验证</h3>
+              <p>实时监控 Agent 行为，动态调整权限策略，确保安全状态持续有效。</p>
+            </div>
+          </div>
+          <div class="zt-principle">
+            <div class="principle-icon">🛡️</div>
+            <div class="principle-content">
+              <h3>微隔离</h3>
+              <p>将系统划分为精细的安全区域，限制横向移动，降低攻击面。</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="zt-impl">
+          <h3>紫微零信任实现</h3>
+          <div class="impl-grid">
+            <div class="impl-item">
+              <span class="impl-label">身份验证</span>
+              <span class="impl-arrow">→</span>
+              <span class="impl-value">DID 去中心化身份</span>
+            </div>
+            <div class="impl-item">
+              <span class="impl-label">策略执行</span>
+              <span class="impl-arrow">→</span>
+              <span class="impl-value">谛听 PEP 拦截</span>
+            </div>
+            <div class="impl-item">
+              <span class="impl-label">决策引擎</span>
+              <span class="impl-arrow">→</span>
+              <span class="impl-value">獬豸 PDP 评估</span>
+            </div>
+            <div class="impl-item">
+              <span class="impl-label">审批流</span>
+              <span class="impl-arrow">→</span>
+              <span class="impl-value">CHEQ 人机协同</span>
+            </div>
+            <div class="impl-item">
+              <span class="impl-label">审计</span>
+              <span class="impl-arrow">→</span>
+              <span class="impl-value">完整审计日志</span>
+            </div>
           </div>
         </div>
       </div>
@@ -400,6 +486,92 @@ import Layout from '../layouts/Layout.astro';
   
   .btn-link:hover {
     gap: 12px;
+  }
+  
+  .btn-link:hover {
+    gap: 12px;
+  }
+  
+  /* Zero Trust Styles */
+  .zt-principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .zt-principle {
+    display: flex;
+    gap: 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .principle-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  
+  .principle-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .principle-content p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  .zt-impl {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  
+  .zt-impl h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .impl-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .impl-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+  }
+  
+  .impl-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  
+  .impl-arrow {
+    color: var(--accent-primary);
+    padding: 0 12px;
+  }
+  
+  .impl-value {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    flex: 1;
+    text-align: right;
   }
   
   @media (max-width: 768px) {
