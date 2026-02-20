@@ -587,13 +587,99 @@ import Layout from '../layouts/Layout.astro';
   }
   
   @media (max-width: 768px) {
+    .about-hero {
+      padding: 60px 0 40px;
+    }
+
+    .about-hero h1 {
+      font-size: 2rem;
+    }
+
+    .about-hero p {
+      font-size: 1rem;
+    }
+
+    .about-content {
+      padding: 40px 0 60px;
+    }
+
+    .about-section {
+      margin-bottom: 60px;
+      padding: 0 16px;
+    }
+
+    .about-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .section-icon {
+      font-size: 1.5rem;
+    }
+
+    .components-grid {
+      grid-template-columns: 1fr;
+    }
+
     .values-grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
-    
+
+    .value-item {
+      padding: 20px 16px;
+    }
+
     .team-grid {
       flex-direction: column;
       align-items: center;
+    }
+
+    .team-card {
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .zt-principles {
+      grid-template-columns: 1fr;
+    }
+
+    .zt-principle {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .impl-item {
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .impl-arrow {
+      transform: rotate(90deg);
+      padding: 4px 0;
+    }
+
+    .impl-label,
+    .impl-value {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .component-card {
+      padding: 20px;
     }
   }
 </style>

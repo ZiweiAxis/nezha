@@ -115,6 +115,57 @@ const { title = "紫微" } = Astro.props;
       color: var(--text-primary);
     }
 
+    /* Mobile Menu Button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      color: var(--text-primary);
+    }
+
+    .menu-toggle svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 15, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      flex-direction: column;
+      gap: 0;
+      z-index: 99;
+    }
+
+    .mobile-nav.active {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 1rem 1.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .mobile-nav a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav a:hover, .mobile-nav a.active {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+
     /* Main */
     main {
       padding-top: 80px;
@@ -137,13 +188,24 @@ const { title = "紫微" } = Astro.props;
       font-size: 0.875rem;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
       nav {
         display: none;
       }
-      
+
+      .menu-toggle {
+        display: flex;
+      }
+
       .container {
         padding: 0 1rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
       }
     }
   </style>
@@ -162,9 +224,22 @@ const { title = "紫微" } = Astro.props;
           <a href="/docs">文档</a>
           <a href="/about">关于</a>
         </nav>
+        <button class="menu-toggle" aria-label="菜单" id="menuToggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="/">首页</a>
+    <a href="/docs">文档</a>
+    <a href="/about">关于</a>
+  </nav>
   
   <main>
     <slot />
@@ -178,5 +253,21 @@ const { title = "紫微" } = Astro.props;
       </div>
     </div>
   </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+
+    menuToggle?.addEventListener('click', () => {
+      mobileNav?.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking a link
+    mobileNav?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+      });
+    });
+  </script>
 </body>
 </html>

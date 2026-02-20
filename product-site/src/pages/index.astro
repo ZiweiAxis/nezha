@@ -631,36 +631,135 @@ import Layout from '../layouts/Layout.astro';
   
   /* Responsive */
   @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2.2rem;
+    .hero {
+      padding: 80px 0 60px;
     }
-    
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
     .hero-desc {
+      font-size: 0.95rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      width: 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
+
+    .section-header h2 {
+      font-size: 1.75rem;
+    }
+
+    .section-header p {
       font-size: 1rem;
     }
-    
+
+    .features {
+      padding: 60px 0;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
     }
-    
-    .arch-layer {
+
+    .stat-value {
+      font-size: 2rem;
+    }
+
+    .zero-trust {
+      padding: 60px 0;
+    }
+
+    .zt-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .zt-mapping {
+      padding: 0 16px;
+    }
+
+    .mapping-table {
+      padding: 16px;
+    }
+
+    .mapping-row {
       flex-direction: column;
-      gap: 8px;
-    }
-    
-    .arch-label {
-      width: auto;
+      gap: 4px;
       text-align: center;
     }
-    
-    .arch-connector {
-      margin-left: 0;
-      width: 2px;
-      height: 16px;
+
+    .mapping-concept,
+    .mapping-impl {
+      text-align: center;
     }
-    
+
+    .mapping-arrow {
+      transform: rotate(90deg);
+      padding: 4px 0;
+    }
+
+    .architecture {
+      padding: 60px 0;
+    }
+
+    .arch-diagram {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .arch-flow {
+      min-width: 600px;
+      justify-content: flex-start;
+    }
+
+    .cta {
+      padding: 60px 0;
+    }
+
     .cta-content {
-      padding: 40px 24px;
+      padding: 40px 20px;
+      margin: 0 16px;
+    }
+
+    .cta h2 {
+      font-size: 1.5rem;
+    }
+
+    .cta-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 1.75rem;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+    }
+
+    .feature-card {
+      padding: 24px;
+    }
+
+    .stat-item {
+      padding: 12px;
     }
   }
 </style>
