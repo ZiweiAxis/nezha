@@ -1,0 +1,23 @@
+{"timestamp":"2026-02-08T10:23:08.504456082+08:00","method":"GET","host":"httpbin.org","path":"/get","body":"","risk_level":"低","intent_analysis":"","decision":"ALLOW","approver":"","response_code":200,"duration_ms":560}
+{"timestamp":"2026-02-08T10:23:29.938076858+08:00","method":"DELETE","host":"httpbin.org","path":"/delete","body":"","risk_level":"高","intent_analysis":"规则引擎: DELETE /delete 操作需要审批","decision":"DENY","approver":"DENIED","response_code":403,"duration_ms":3099}
+{"timestamp":"2026-02-08T10:23:35.492687924+08:00","method":"GET","host":"","path":"/","body":"","risk_level":"低","intent_analysis":"","decision":"ALLOW","approver":"","response_code":502,"duration_ms":0}
+{"timestamp":"2026-02-08T10:25:10.495089391+08:00","method":"DELETE","host":"httpbin.org","path":"/delete","body":"","risk_level":"高","intent_analysis":"规则引擎: DELETE /delete 操作需要审批","decision":"DENY","approver":"DENIED","response_code":403,"duration_ms":2697}
+{"timestamp":"2026-02-08T10:26:07.008522919+08:00","method":"DELETE","host":"httpbin.org","path":"/delete","body":"","risk_level":"高","intent_analysis":"规则引擎: DELETE /delete 操作需要审批","decision":"DENY","approver":"DENIED","response_code":403,"duration_ms":2627}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T12:31:49+08:00","type":"https_connect"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T12:33:30+08:00","type":"https_connect"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T12:34:58+08:00","type":"https_connect"}
+{"approved":true,"host":"postman-echo.com:443","timestamp":"2026-02-08T12:35:29+08:00","type":"https_connect"}
+{"timestamp":"2026-02-08T12:51:15.788857184+08:00","method":"DELETE","host":"postman-echo.com","path":"/delete","body":"","risk_level":"高","intent_analysis":"规则引擎: DELETE /delete 操作需要审批","decision":"DENY","approver":"","response_code":403,"duration_ms":0}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","reason":"Approved by user via Feishu message","request_id":"4f71df41-87e0-4472-99d0-adcb5821775b","timestamp":"2026-02-08T13:35:59+08:00","type":"approval_decision"}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","timestamp":"2026-02-08T13:35:59+08:00","type":"http_request"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T13:46:28+08:00","type":"https_connect"}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","reason":"Approved by user via Feishu message","request_id":"1cad924c-d744-4138-aa72-ffc1a82e2318","timestamp":"2026-02-08T13:46:33+08:00","type":"approval_decision"}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","timestamp":"2026-02-08T13:46:33+08:00","type":"http_request"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T13:48:44+08:00","type":"https_connect"}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","reason":"Approved by user via Feishu message","request_id":"7fb72621-0e93-4a13-8d66-ef90ddcea77b","timestamp":"2026-02-08T13:48:50+08:00","type":"approval_decision"}
+{"approved":true,"host":"postman-echo.com","method":"DELETE","path":"/delete","timestamp":"2026-02-08T13:48:50+08:00","type":"http_request"}
+{"approved":true,"host":"127.0.0.1:18080","method":"GET","path":"/test","timestamp":"2026-02-08T20:55:38+08:00","type":"http_request"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T22:28:52+08:00","type":"https_connect"}
+{"approved":true,"host":"httpbin.org:443","timestamp":"2026-02-08T22:29:03+08:00","type":"https_connect"}
+{"approved":true,"host":"example.com","method":"DELETE","path":"/delete","reason":"Approved by user via Feishu message","request_id":"743f65ee-aecb-4345-8f70-3cb0c24450b1","timestamp":"2026-02-08T22:30:42+08:00","type":"approval_decision"}
+{"approved":true,"host":"example.com","method":"DELETE","path":"/delete","timestamp":"2026-02-08T22:30:42+08:00","type":"http_request"}

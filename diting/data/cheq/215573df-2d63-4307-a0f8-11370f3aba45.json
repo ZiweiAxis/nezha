@@ -1,0 +1,1 @@
+{"ID":"215573df-2d63-4307-a0f8-11370f3aba45","TraceID":"627ea72f-202e-4520-9d50-b26b0cb836c0","Status":"rejected","CreatedAt":"2026-02-09T20:48:39.461788175+08:00","ExpiresAt":"2026-02-09T20:50:39.461786326+08:00","Resource":"/admin","Action":"GET","Summary":"localhost:8080/admin","ConfirmerIDs":null,"Type":"operation_approval"}

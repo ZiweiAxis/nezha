@@ -1,0 +1,1 @@
+{"ID":"afeebdc1-d740-4518-b376-d4751f977b96","TraceID":"f12dac57-992c-41e1-b47b-de1cca624716","Status":"approved","CreatedAt":"2026-02-11T12:26:20.95388622+08:00","ExpiresAt":"2026-02-11T12:28:20.953884124+08:00","Resource":"local://host","Action":"exec:sudo","Summary":"sudo echo ok","ConfirmerIDs":null,"Type":"operation_approval"}

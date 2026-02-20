@@ -1,0 +1,1 @@
+{"ID":"ef894b3e-49f9-4842-9d9d-f3d7ee39c2c0","TraceID":"f9a504a3-f4ce-4279-8664-0194827f57ac","Status":"expired","CreatedAt":"2026-02-09T20:41:28.306740595+08:00","ExpiresAt":"2026-02-09T20:43:28.306738962+08:00","Resource":"/admin","Action":"GET","Summary":"localhost:8080/admin","ConfirmerIDs":null,"Type":"operation_approval"}
