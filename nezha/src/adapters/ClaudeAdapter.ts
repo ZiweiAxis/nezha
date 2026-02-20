@@ -162,9 +162,10 @@ export class ClaudeAdapter implements IAgentAdapter {
    * 
    * 实现方案：
    * 1. 创建工作目录的挂载路径
-   * 2. 使用 podman 运行容器（基于 alpine + node 镜像）
-   * 3. 在容器内启动 Claude CLI
-   * 4. 返回容器实例信息
+   * 2. 使用包含 Go 的镜像（需要编译 diter-hook）
+   * 3. 在容器内安装 diter-hook
+   * 4. 配置 Claude Code hooks
+   * 5. 返回容器实例信息
    */
   private async startSandbox(config: AgentConfig, workDir: string): Promise<AgentInstance> {
     const containerName = `nezha-sandbox-${config.name}-${Date.now()}`;
@@ -179,13 +180,16 @@ export class ClaudeAdapter implements IAgentAdapter {
     }
 
     // 2. 构建 podman 运行命令
-    // 使用 alpine-node 镜像作为沙箱基础
-    const imageName = 'docker.io/library/node:18-alpine';
+    // 使用 golang:alpine 镜像（需要 Go 环境编译 diter-hook）
+    const imageName = 'docker.io/library/golang:1.21-alpine';
     
     // 环境变量
     const envVars = [
       `WUKONG_AGENT_NAME=${config.name}`,
       `WUKONG_MODE=sandbox`,
+      // diter-hook 配置
+      `DITING_URL=${this.DITING_URL}`,
+      `DITING_SUBJECT=${config.name}`,
     ];
     
     // 添加自定义环境变量
@@ -196,11 +200,6 @@ export class ClaudeAdapter implements IAgentAdapter {
     }
 
     // 3. 使用 podman run 启动容器
-    // -d: 后台运行
-    // --name: 容器名称
-    // -v: 挂载工作目录
-    // -w: 工作目录
-    // --network: 网络模式
     const podmanArgs = [
       'run',
       '-d',
@@ -210,7 +209,7 @@ export class ClaudeAdapter implements IAgentAdapter {
       '--network', 'bridge',
       ...envVars.flatMap(e => ['-e', e]),
       imageName,
-      'sleep', 'infinity', // 保持容器运行
+      'sleep', 'infinity',
     ];
 
     const { execSync } = require('child_process');
@@ -230,8 +229,59 @@ export class ClaudeAdapter implements IAgentAdapter {
       throw new Error(`Failed to start sandbox container: ${err.message}\n${err.stderr || ''}`);
     }
 
-    // 4. 在容器内安装并启动 Claude CLI（如果需要）
-    // 这里我们只是启动容器，实际的 Claude CLI 启动可以通过 exec 进入容器执行
+    // 4. 在容器内安装 diter-hook
+    console.log(`[ClaudeAdapter] Installing diter-hook in container...`);
+    try {
+      // 安装 Go 和编译 diter-hook
+      execSync(`podman exec ${containerId} apk add --no-cache git`, {
+        stdio: 'pipe',
+      });
+      
+      // 克隆并编译 diter-hook
+      execSync(`podman exec ${containerId} sh -c "cd /tmp && git clone --depth 1 https://github.com/ZiweiAxis/nezha.git && cd nezha/xiezhi/cmd/diting_hook && go build -o diter-hook"`, {
+        stdio: 'pipe',
+      });
+      
+      console.log(`[ClaudeAdapter] diter-hook compiled successfully`);
+    } catch (error) {
+      console.warn(`[ClaudeAdapter] Failed to install diter-hook: ${error}`);
+      // 不阻止启动，仅警告
+    }
+
+    // 5. 配置 Claude Code hooks
+    try {
+      // 创建 .claude 目录和 settings.json
+      execSync(`podman exec ${containerId} sh -c "mkdir -p /workspace/.claude"`, {
+        stdio: 'pipe',
+      });
+      
+      const hookSettings = {
+        "hooks": {
+          "PreToolUse": [
+            {
+              "match": ".*",
+              "hooks": [
+                {
+                  "type": "command",
+                  "command": "/tmp/nezha/xiezhi/cmd/diting_hook/diting-hook",
+                  "args": ["check", "--input", "${json .}"]
+                }
+              ]
+            }
+          ]
+        }
+      };
+      
+      // 写入 settings.json
+      execSync(`podman exec ${containerName} sh -c 'echo \${HOOK_SETTINGS} > /workspace/.claude/settings.json'`, {
+        env: { HOOK_SETTINGS: JSON.stringify(hookSettings) },
+        stdio: 'pipe',
+      });
+      
+      console.log(`[ClaudeAdapter] Claude Code hooks configured`);
+    } catch (error) {
+      console.warn(`[ClaudeAdapter] Failed to configure hooks: ${error}`);
+    }
     
     const instance: AgentInstance = {
       id: containerId,
@@ -248,6 +298,9 @@ export class ClaudeAdapter implements IAgentAdapter {
         imageName,
       },
     };
+
+    // 6. 配置 diter-hook
+    await this.configureDitingHook(instance);
 
     return instance;
   }
