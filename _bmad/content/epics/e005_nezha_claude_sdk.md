@@ -5,8 +5,8 @@
 | 属性 | 值 |
 |------|-----|
 | Epic ID | E005 |
-| 名称 | 哪吒集成 Claude Agent SDK |
-| 描述 | 让哪吒能够调用 Claude Agent SDK 实现 AI Agent 能力 |
+| 名称 | 悟空 - 智能体模块 |
+| 描述 | 让哪吒能够调用 Claude Agent SDK 实现 AI Agent 能力，命名为"悟空" |
 | 状态 | 🆕 新建 |
 | 优先级 | P0 |
 | 依赖方 | - |
