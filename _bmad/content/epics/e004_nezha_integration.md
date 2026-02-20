@@ -30,6 +30,28 @@
 | S010 | 集成谛听客户端 | 集成谛听客户端实现拦截 |
 | S011 | 集成太白 SDK | 集成太白 SDK 实现消息发送 |
 
+---
+
+## 验收标准 (Acceptance Criteria)
+
+- [ ] 谛听客户端正确集成
+- [ ] Agent 启动时 Seccomp 注入成功
+- [ ] 太白 SDK 正确集成
+- [ ] 消息发送功能正常
+
+## Definition of Done
+
+- [ ] 谛听客户端库引入
+- [ ] Seccomp 注入成功
+- [ ] 策略回调正确处理
+- [ ] 太白 SDK 引入
+- [ ] 消息发送功能正常
+- [ ] 单元测试通过
+- [ ] 集成测试通过
+- [ ] 端到端测试通过
+
+---
+
 ## S010: 集成谛听客户端
 
 ### 任务
@@ -80,44 +102,98 @@ type DitingClient interface {
 type PolicyHandler func(ctx context.Context, req *PolicyRequest) (*PolicyResponse, error)
 ```
 
-### 使用示例
+---
 
-```go
-package nezha
+### T010.1: 引入谛听客户端库
 
-import (
-    "context"
-    "diting-client"
-)
-
-func NewAgent(config *AgentConfig) (*Agent, error) {
-    // 初始化谛听客户端
-    diting, err := diting.NewClient(diting.Config{
-        Address: config.DitingAddr,
-        Token:   config.DitingToken,
-    })
-    if err != nil {
-        return nil, err
-    }
-    
-    // 设置策略处理
-    diting.SetPolicyHandler(func(ctx context.Context, req *diting.PolicyRequest) (*diting.PolicyResponse, error) {
-        // 自定义策略处理逻辑
-        return &diting.PolicyResponse{
-            Decision: diting.DecisionAllow,
-        }, nil
-    })
-    
-    // 初始化 Seccomp
-    if err := diting.InitSeccomp(); err != nil {
-        return nil, err
-    }
-    
-    return &Agent{
-        diting: diting,
-    }, nil
-}
+```yaml
+---
+title: T010.1 引入谛听客户端库
+status: pending
+agent: default
+---
 ```
+
+**目标**: 在哪吒项目中引入谛听客户端库
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: E002 (谛听) 开发中或完成
+- Go: 1.21+
+
+**步骤**:
+1. 添加 `go get github.com/ziwei-llc/diting-client`
+2. 或使用本地 replace
+3. 验证 import 可用
+
+**验收**:
+- [ ] 客户端库引入成功
+- [ ] 类型定义可用
+
+---
+
+### T010.2: Agent 启动时注入 Seccomp
+
+```yaml
+---
+title: T010.2 Agent 启动时注入 Seccomp
+status: pending
+agent: default
+---
+```
+
+**目标**: 实现 Agent 启动时自动注入 Seccomp
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: T010.1 完成
+
+**步骤**:
+1. 初始化谛听客户端
+2. 配置策略处理回调
+3. 在 Agent 启动时调用 `InitSeccomp()`
+4. 处理信号优雅关闭
+
+**验收**:
+- [ ] Seccomp 注入成功
+- [ ] 可通过 `/proc/self/status` 验证
+
+**验证命令**:
+```bash
+grep Seccomp /proc/<agent_pid>/status
+```
+
+---
+
+### T010.3: 测试验证
+
+```yaml
+---
+title: T010.3 测试验证
+status: pending
+agent: default
+---
+```
+
+**目标**: 验证谛听客户端集成
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: T010.2 完成
+- 需要: 谛听服务端运行
+
+**步骤**:
+1. 启动 Agent
+2. 验证 Seccomp 状态
+3. 测试 syscall 拦截
+4. 测试策略回调
+
+**验收**:
+- [ ] 集成测试通过
+- [ ] Seccomp 拦截工作
+- [ ] 策略回调触发
+
+---
 
 ## S011: 集成太白 SDK
 
@@ -185,12 +261,91 @@ taibai:
   token: "${TIANSHU_TOKEN}"
 ```
 
-## 验收标准
+---
 
-- [ ] 谛听客户端正确集成
-- [ ] Agent 启动时 Seccomp 注入成功
-- [ ] 太白 SDK 正确集成
-- [ ] 消息发送功能正常
+### T011.1: 引入太白 Go SDK
+
+```yaml
+---
+title: T011.1 引入太白 Go SDK
+status: pending
+agent: default
+---
+```
+
+**目标**: 在哪吒项目中引入太白 Go SDK
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: E001 (太白 SDK) 完成
+
+**步骤**:
+1. 添加 `go get github.com/ziwei-llc/taibai-sdk-go`
+2. 或使用本地 replace
+3. 验证 import 可用
+
+**验收**:
+- [ ] SDK 引入成功
+- [ ] 类型定义可用
+
+---
+
+### T011.2: 实现消息发送功能
+
+```yaml
+---
+title: T011.2 实现消息发送功能
+status: pending
+agent: default
+---
+```
+
+**目标**: 使用太白 SDK 实现消息发送
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: T011.1 完成
+
+**步骤**:
+1. 创建 `MessageService` 封装
+2. 实现房间消息发送
+3. 实现用户消息发送
+4. 配置管理
+
+**验收**:
+- [ ] 消息发送功能完整
+- [ ] 配置加载正确
+
+---
+
+### T011.3: 测试验证
+
+```yaml
+---
+title: T011.3 测试验证
+status: pending
+agent: default
+---
+```
+
+**目标**: 验证太白 SDK 集成
+
+**上下文**:
+- 工作目录: `/home/dministrator/workspace/ziwei/nezha/`
+- 依赖: T011.2 完成
+- 需要: 天枢服务运行
+
+**步骤**:
+1. 单元测试
+2. 集成测试（发送消息到天枢）
+3. E2E 测试（Agent -> 天枢 -> 房间）
+
+**验收**:
+- [ ] 单元测试通过
+- [ ] 集成测试通过
+- [ ] 消息发送成功
+
+---
 
 ## 相关文档
 
