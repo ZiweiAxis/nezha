@@ -209,6 +209,16 @@ Docker 沙箱（E5）、多 Agent 与自动重启（E6）；W2 待审批/轮询�
 
 ### 身份与注册 (Identity & Registration)
 
+#### Owner 注册流程
+
+1. **天枢初始化**：首次启动时运行 `init_system.py`，预注册管理员 `admin`
+2. **手动注册 Owner**：管理员通过 API 注册其他 Owner（如谛听的 `diting`）
+   ```bash
+   POST /api/v1/owners/register
+   Body: {"owner_id": "diting", "identities": {"system": {"type": "diting"}}}
+   ```
+3. **Agent 注册**：Agent 启动时使用已注册的 Owner ID 进行注册
+
 - FR1: 用户可在首次启动时通过悟空完成 Agent 身份向天枢注册。
 - FR2: 用户可在身份已缓存时再次启动时复用本地身份而无需重新注册。
 - FR3: 系统可在注册需审批时展示或轮询审批状态，直至审批通过或超时/拒绝。

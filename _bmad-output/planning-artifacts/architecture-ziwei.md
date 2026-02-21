@@ -196,5 +196,18 @@
 
 ```bash
 # 谛听配置
-DITING_OWNER_ID=owner-diting  # 天枢预注册的 Owner ID
+DITING_OWNER_ID=diting  # 必须是天枢已注册的 Owner
 ```
+
+#### Owner 注册流程
+
+1. **天枢初始化**：首次启动时运行 `init_system.py`
+   - 预注册管理员 `admin`
+   
+2. **手动注册 Owner**：管理员通过 API 注册
+   ```bash
+   POST /api/v1/owners/register
+   Body: {"owner_id": "diting", "identities": {"system": {"type": "diting"}}}
+   ```
+
+3. **Agent 注册**：Agent 启动时使用已注册的 Owner ID
