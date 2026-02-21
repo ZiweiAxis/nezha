@@ -69,5 +69,5 @@ Body: {
 ## 待确认
 
 - [x] 天枢只预注册 admin
-- [ ] 管理员手动注册谛听 Owner
-- [ ] 添加 Owner 注册 API
+- [x] 管理员手动注册谛听 Owner
+- [x] 添加 Owner 注册 API（已详细设计，见 e020_owner_register_api.md）

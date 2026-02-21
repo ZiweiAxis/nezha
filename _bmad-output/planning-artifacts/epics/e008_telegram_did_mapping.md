@@ -7,7 +7,7 @@
 | Epic ID | E008 |
 | 名称 | Telegram 用户与 DID 映射 |
 | 描述 | 实现 Telegram 用户与天枢 owner_id 的映射机制 |
-| 状态 | 🆕 新建 |
+| 状态 | 🚧 进行中 |
 | 优先级 | P0 |
 | 依赖 | E007 |
 
@@ -95,6 +95,42 @@ async def handle_message(self, update: TelegramUpdate):
 - [ ] 用户会话管理
 - [ ] 上下文保持
 
+### 设计方案
+
+#### 会话结构
+```python
+{
+    "session_id": "xxx",
+    "owner_id": "owner-xxx",
+    "telegram_chat_id": "123456789",
+    "messages": [...],
+    "created_at": "2026-02-21T10:00:00Z",
+    "updated_at": "2026-02-21T10:05:00Z",
+    "expires_at": "2026-02-21T11:00:00Z"  # 1小时无活动过期
+}
+```
+
+#### 存储设计
+- Bucket: `sessions`
+- 过期策略：1小时无活动自动清理
+
+#### 接口设计
+```python
+def create_session(owner_id: str, chat_id: str) -> str:
+    """创建会话"""
+
+def get_session(session_id: str) -> Optional[Session]:
+    """获取会话"""
+
+def append_message(session_id: str, role: str, content: str):
+    """追加消息"""
+
+def cleanup_expired_sessions():
+    """清理过期会话"""
+```
+
 ### 验收
 
 - [ ] 多轮对话保持上下文
+- [ ] 会话超时自动清理
+- [ ] 并发会话隔离
