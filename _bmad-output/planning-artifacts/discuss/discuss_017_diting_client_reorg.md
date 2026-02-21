@@ -30,9 +30,9 @@ identity/               ← 身份管理
 diting_client/          ← ❌ 放错位置
 ```
 
-## 方案
+## 方案 A：合并到 registration 模块（采用）
 
-### 方案 A：合并到 registration 模块
+### 目标结构
 
 ```
 registration/
@@ -40,39 +40,34 @@ registration/
 ├── agent_self_register.py
 ├── human_initiated.py
 ├── pairing_code.py
-├── diting_notify.py      # 从 diting_client/init_permission.py 移入
-└── chain_did.py         # 从 diting_client/chain_did.py 移入
+└── diting/                   # 新增目录
+    ├── __init__.py
+    ├── notify.py             # 从 diting_client/init_permission.py 移入
+    └── chain_did.py          # 从 diting_client/chain_did.py 移入
 ```
 
-**优点**：注册流程闭环，相关代码集中
-**缺点**：需要修改 import 路径
+## Sub-Agent 任务分配
 
-### 方案 B：创建独立的 service 模块
+将 016、017、018 三个讨论项作为独立 Sub-Agent 任务并行推进：
 
-```
-services/
-├── registration/
-│   ├── agent_self_register.py
-│   ├── human_initiated.py
-│   └── pairing_code.py
-└── diting/
-    ├── init_permission.py
-    └── chain_did.py
-```
-
-**优点**：职责更清晰
-**缺点**：改动更大
-
-## 推荐
-
-**方案 A** - 最小改动，将 `diting_client/` 合并到 `registration/`
+| Sub-Agent | 任务 | Discuss |
+|-----------|------|---------|
+| **Agent 1** | Channel 模块重构（仅 Telegram） | discuss_016 |
+| **Agent 2** | diting_client 归属调整 | discuss_017 |
+| **Agent 3** | 身份管理多渠道映射 | discuss_018 |
 
 ## 待确认
 
-- [ ] 采用哪个方案？
-- [ ] 是否需要拆分 chain_did 到独立模块？
+- [x] 采用方案 A
+- [x] 拆分为 3 个 Sub-Agent 任务
+
+## 迁移计划（由 Sub-Agent 并行推进）
+
+- **Agent 1**: Channel 模块重构
+- **Agent 2**: diting_client 归属调整
+- **Agent 3**: 身份管理多渠道映射
 
 ---
 
 **讨论时间**: 2026-02-21
-**状态**: 🔵 待确认
+**状态**: ✅ 已确认，由 3 个 Sub-Agent 并行推进

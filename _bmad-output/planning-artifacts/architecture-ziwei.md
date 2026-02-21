@@ -157,3 +157,44 @@
 ---
 
 **文档结束**
+
+---
+
+## 附录：存储与身份管理（2026-02-21 更新）
+
+### 存储后端
+
+天枢使用可插拔存储后端，支持多种方案：
+
+| 方案 | 环境 | 配置 |
+|------|------|------|
+| Memory | 开发/测试 | 默认 |
+| SQLite | 中小规模 | `TIANSHU_STORAGE=sqlite` |
+| MySQL | 企业级 | `TIANSHU_STORAGE=mysql` |
+| PostgreSQL | 企业级 | `TIANSHU_STORAGE=postgres` |
+
+### Owner 数据结构
+
+```python
+{
+    "owner_id": "owner-xxx",
+    "identities": {
+        "email": {"address": "user@company.com"},
+        "telegram": {"user_id": "5632751765"}
+    },
+    "channels": [
+        {"type": "telegram", "receive_id": "5632751765", "enabled": true}
+    ],
+    "created_at": "2026-02-21T10:00:00Z",
+    "updated_at": "2026-02-21T10:00:00Z"
+}
+```
+
+### 谛听注册
+
+谛听到天枢注册时，需提供预注册的 Owner ID：
+
+```bash
+# 谛听配置
+DITING_OWNER_ID=owner-diting  # 天枢预注册的 Owner ID
+```

@@ -25,26 +25,16 @@ src/channel/
 ├── base.py              # Channel 抽象基类
 ├── registry.py          # Channel 注册表
 │
-├── telegram/
-│   ├── __init__.py
-│   ├── client.py        # Telegram API 客户端
-│   ├── bot.py           # Bot 处理器
-│   ├── webhook.py        # Webhook 处理器
-│   ├── message.py       # 消息构建
-│   └── render.py        # 卡片渲染
-│
-├── feishu/
-│   ├── __init__.py
-│   ├── client.py        # 飞书 API 客户端
-│   ├── message.py       # 消息构建
-│   └── render.py        # 卡片渲染
-│
-└── matrix/
+└── telegram/            # 仅实现 Telegram
     ├── __init__.py
-    ├── client.py        # Matrix 客户端
+    ├── client.py        # Telegram API 客户端
+    ├── bot.py           # Bot 处理器
+    ├── webhook.py       # Webhook 处理器
     ├── message.py       # 消息构建
-    └── room.py          # 房间管理
+    └── render.py        # 卡片渲染
 ```
+
+**注意**：飞书/Matrix 暂不实现，后续按需扩展。
 
 ### 核心接口
 
@@ -67,17 +57,19 @@ class Channel(ABC):
         """注册回调处理器（按钮点击）"""
 ```
 
-### 迁移计划
+### 迁移计划（仅 Telegram）
 
 1. 创建 `channel/` 目录和基础抽象
 2. 将 `telegram/` 代码迁移到 `channel/telegram/`
 3. 将 `bridge/telegram.py` 迁移到 `channel/telegram/`
 4. 将 `delivery/telegram.py` 迁移到 `channel/telegram/`
 5. 清理顶层 telegram 相关文件
-6. 飞书/Matrix 同理
 
-## 待细化
+**飞书/Matrix 暂不实现。**
 
+## 待确认
+
+- [x] 只实现 Telegram
 - [ ] 确认 Channel 基类接口设计
 - [ ] 确认消息格式 (Message/Card 结构)
 - [ ] 确认回调机制 (Callback 结构)
@@ -92,4 +84,4 @@ class Channel(ABC):
 ---
 
 **讨论时间**: 2026-02-21
-**状态**: 🔵 待确认
+**状态**: ✅ 已确认，Sub-Agent 并行推进
