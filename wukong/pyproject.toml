@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "wukong"
+version = "0.1.0"
+description = "悟空智能体 - 支持 Skill 系统与天枢消息通道"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "aiohttp>=3.9.0",
+    "pyyaml>=6.0",
+    "brotli>=1.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+hotreload = [
+    "watchdog>=4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
